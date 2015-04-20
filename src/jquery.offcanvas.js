@@ -8,30 +8,13 @@
     var settings, $el, $cont, $outerWrapper, $innerWrapper, $trigger, $win, open,
         $head = $("head");
 
-    var _getSupportedTransform = function() {
-        var prefixes = 'transform WebkitTransform MozTransform OTransform msTransform'.split(' ');
-        var div = document.createElement('div');
-        for(var i = 0; i < prefixes.length; i++) {
-            if(div && div.style[prefixes[i]] !== undefined) {
-                return prefixes[i];
-            }
-        }
-        return false;
-    };
+    var _getPrefix = function(prefixes) {
+        var p;
+        var el = document.createElement('div');
 
-    var _getSupportedTransitionEnd = function() {
-        var t;
-        var el = document.createElement('fakeelement');
-        var transitions = {
-            'transition':'transitionend',
-            'OTransition':'oTransitionEnd',
-            'MozTransition':'transitionend',
-            'WebkitTransition':'webkitTransitionEnd'
-        };
-
-        for(t in transitions){
-            if( el.style[t] !== undefined ){
-                return transitions[t];
+        for(p in prefixes){
+            if( el.style[p] !== undefined ){
+                return prefixes[p];
             }
         }
 
@@ -39,11 +22,22 @@
     };
 
     var _animate = function(position, callback) {
-        console.log("animate");
-        var cssTransform = _getSupportedTransform(),
-            cssTransitionEnd = _getSupportedTransitionEnd();
+        var cssTransform = _getPrefix({
+                'transform': 'transform',
+                'WebkitTransform': '-webkit-transform',
+                'MozTransform': '-moz-transform',
+                'OTransform': '-o-transform',
+                'msTransform': '-ms-transform'
+            });
 
-        if (cssTransform) {
+        var cssTransitionEnd = _getPrefix({
+                'transition': 'transitionend',
+                'OTransition': 'oTransitionEnd',
+                'MozTransition': 'transitionend',
+                'WebkitTransition': 'webkitTransitionEnd'
+            });
+
+        if (cssTransform && cssTransitionEnd) {
             $innerWrapper.one(cssTransitionEnd, callback);
 
             $innerWrapper.css({
