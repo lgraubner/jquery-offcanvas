@@ -63,8 +63,10 @@
 
     var offcanvas = {
         init: function(options) {
-            console.log('[offcanvas] --init--');
             $el = $(this);
+            if ($el.data("offcanvas")) return;
+            console.log('[offcanvas] --init--');
+
             $win = $(window);
             open = false;
             settings = $.extend($.fn.offcanvas.defaults, $el.data(), options);
@@ -152,6 +154,8 @@
             $trigger.off("click.offcanvas");
 
             $head.find("#offcanvas-style").remove();
+
+            $el.removeData("offcanvas");
         }
     };
 
