@@ -53,6 +53,7 @@
     };
 
     var _setHeights = function() {
+        if (!$(settings.container).hasClass(settings.classes.container)) return;
         var height = $(document).height();
         $el.css("height", height);
     };
@@ -156,6 +157,7 @@
             $head.find("#offcanvas-style").remove();
 
             $el.removeData("offcanvas");
+            _clearHeights();
         }
     };
 
