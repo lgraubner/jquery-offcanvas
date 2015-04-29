@@ -43,6 +43,16 @@ $("#navigation").on("shown.offcanvas", function() {
 
 ### Options
 
+via data-Attributes
+
+```HTML
+<div id="navigation" data-direction="right" data-trigger="#button">
+    ...
+</div>
+```
+
+via Javascript
+
 ```JavaScript
 $.fn.offcanvas.defaults = {
     coverage: "200px",
