@@ -6,6 +6,7 @@
     "use strict";
 
     var settings, $el, $cont, $outerWrapper, $innerWrapper, $trigger, $win, open,
+        initialized = false,
         $head = $("head");
 
     var _getPrefix = function(prefixes) {
@@ -53,7 +54,7 @@
     };
 
     var _setHeights = function() {
-        if (!$(settings.container).hasClass(settings.classes.container)) return;
+        if (!initialized) return;
         var height = $(document).height();
         $el.css("height", height);
     };
@@ -64,9 +65,9 @@
 
     var offcanvas = {
         init: function(options) {
-            $el = $(this);
-            if ($el.data("offcanvas")) return;
+            if (initialized) return;
             console.log('[offcanvas] --init--');
+            $el = $(this);
 
             $win = $(window);
             open = false;
@@ -87,13 +88,16 @@
             var style = '<style id="offcanvas-style">' +
                 settings.container + " ." + settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
                 settings.container + " ." + settings.classes.inner + " { position: relative; } " +
-                settings.container + " " + settings.element + " { display: block; height: 0; left: " + position + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
+                settings.container + " #" + $el.prop("id") + " { display: block; height: 0; left: " + position + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
                 "</style>";
 
             $head.append(style);
 
             $trigger = $(settings.trigger);
             $trigger.on("click.offcanvas", offcanvas.toggle);
+
+            initialized = true;
+            $el.trigger("init.offcanvas");
         },
 
         show: function() {
@@ -131,7 +135,7 @@
             _animate(0, function() {
                 _clearHeights();
                 $win.off("resize.oncanvas", _setHeights);
-                $el.trigger("hiden.offcanvas");
+                $el.trigger("hidden.offcanvas");
             });
         },
 
@@ -147,6 +151,7 @@
         },
 
         destroy: function() {
+            if (!initialized) return;
             console.log("[offcanvas] --destroy--");
             $innerWrapper.unwrap();
             $innerWrapper.children().unwrap();
@@ -174,7 +179,6 @@
     $.fn.offcanvas.defaults = {
         coverage: "200px",
         direction: "left",
-        element: "#navigation",
         trigger: "#nav-trigger",
         container: "body",
         duration: 200,
