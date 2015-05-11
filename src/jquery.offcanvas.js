@@ -83,15 +83,17 @@
 
             $cont.addClass(settings.classes.container);
 
-            var position = (settings.direction == "left") ? "-" + settings.coverage : "100%";
-
             var style = '<style id="offcanvas-style">' +
                 settings.container + " ." + settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
                 settings.container + " ." + settings.classes.inner + " { position: relative; } " +
-                settings.container + " #" + $el.prop("id") + " { display: block; height: 0; left: " + position + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
+                settings.container + " #" + $el.prop("id") + " { display: block; height: 300px; " + settings.direction + ": -" + settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
                 "</style>";
 
             $head.append(style);
+
+            $el.on("click.offvanvas touchstart.offcanvas", function(e) {
+                e.stopPropagation();
+            });
 
             $trigger = $(settings.trigger);
             $trigger.on("click.offcanvas", offcanvas.toggle);
@@ -118,9 +120,7 @@
 
                     offcanvas.hide();
                 });
-                $el.on("click", function(e) {
-                    e.stopPropagation();
-                });
+
                 $el.trigger("shown.offcanvas");
             });
         },
@@ -139,8 +139,8 @@
             });
         },
 
-        toggle: function() {
-            console.log('[offcanvas] --toggle--');
+        toggle: function(e) {
+            e.stopPropagation();
 
             if (open) {
                 offcanvas.hide();
@@ -156,12 +156,12 @@
             $innerWrapper.unwrap();
             $innerWrapper.children().unwrap();
 
-            $cont.removeClass(settings.classes.container);
+            $cont.off("click.offcanvas touchstart.offcanvas").removeClass(settings.classes.container);
             $trigger.off("click.offcanvas");
 
             $head.find("#offcanvas-style").remove();
 
-            $el.removeData("offcanvas");
+            $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas");
             _clearHeights();
         }
     };
