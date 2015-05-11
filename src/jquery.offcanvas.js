@@ -91,7 +91,7 @@
 
             $head.append(style);
 
-            $el.on("click.offvanvas touchstart.offcanvas", function(e) {
+            $el.show().on("click.offvanvas touchstart.offcanvas", function(e) {
                 e.stopPropagation();
             });
 
@@ -161,7 +161,8 @@
 
             $head.find("#offcanvas-style").remove();
 
-            $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas");
+            $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas").removeAttr("style");
+            initialized = false;
             _clearHeights();
         }
     };
