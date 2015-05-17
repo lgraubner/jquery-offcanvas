@@ -86,3 +86,8 @@ $.fn.offcanvas.defaults = {
 * init
 
 ## Tested with
+
+## FAQ
+* The container is flickering on pageload
+** Hide the container via CSS
+* Do not use coverage values in percent for better performance
