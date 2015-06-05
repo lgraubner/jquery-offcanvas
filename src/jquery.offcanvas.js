@@ -156,7 +156,7 @@
             $innerWrapper.unwrap();
             $innerWrapper.children().unwrap();
 
-            $cont.off("click.offcanvas touchstart.offcanvas").removeClass(settings.classes.container);
+            $cont.off("click.offcanvas touchstart.offcanvas").removeClass(settings.classes.container + "," + settings.classes.open);
             $trigger.off("click.offcanvas");
 
             $head.find("#offcanvas-style").remove();
