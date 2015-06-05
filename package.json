@@ -1,30 +1,30 @@
 {
-    "name": "jquery.offcanvas",
-    "description": "jQuery offcanvas plugin",
-    "version": "0.2.0",
-    "homepage": "https://github.com/lgraubner/offcanvas",
-    "license": "MIT",
-    "devDependencies": {
-        "gulp": "~3.8.11",
-        "gulp-uglify": "~1.1.0",
-        "gulp-jshint": "~1.10.0",
-        "gulp-header": "~1.2.2",
-        "gulp-rename": "~1.2.0",
-        "gulp-strip-debug": "~1.0.2",
-        "jshint-stylish": "~1.0.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lgraubner/offcanvas.git"
-    },
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "dependencies": {
-        "jquery": ">=1.7"
-    },
-    "scripts": {
-        "build": "gulp build",
-        "test": "mocha --reporter spec --timeout 5000"
-    }
+  "name": "jquery.offcanvas",
+  "description": "jQuery offcanvas plugin",
+  "version": "0.2.1",
+  "homepage": "https://github.com/lgraubner/offcanvas",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "~3.8.11",
+    "gulp-uglify": "~1.1.0",
+    "gulp-jshint": "~1.10.0",
+    "gulp-header": "~1.2.2",
+    "gulp-rename": "~1.2.0",
+    "gulp-strip-debug": "~1.0.2",
+    "jshint-stylish": "~1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lgraubner/offcanvas.git"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "test": "mocha --reporter spec --timeout 5000"
+  }
 }
