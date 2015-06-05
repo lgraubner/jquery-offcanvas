@@ -1,6 +1,7 @@
-/*
- * offcanvas
- * Author: Lars Graubner <mail@larsgraubner.de>
+/**
+ * An easy to use plugin for an offcanvas container.
+ *
+ * @author Lars Graubner <mail@larsgraubner.de>
  */
 ;(function($) {
     "use strict";
@@ -9,6 +10,12 @@
         initialized = false,
         $head = $("head");
 
+    /**
+     * Get supported Prefix
+     *
+     * @param  {object} prefixes object containing possible prefixes
+     * @return {string}          supported prefix
+     */
     var _getPrefix = function(prefixes) {
         var p;
         var el = document.createElement('div');
@@ -22,6 +29,12 @@
         return false;
     };
 
+    /**
+     * Animate container with CSS3, using jQuery as fallback.
+     *
+     * @param  {number}   position  position to animate to
+     * @param  {Function} callback  callback function
+     */
     var _animate = function(position, callback) {
         var cssTransform = _getPrefix({
                 'transform': 'transform',
@@ -53,17 +66,32 @@
         }
     };
 
+    /**
+     * Set height of the container.
+     */
     var _setHeights = function() {
         if (!initialized) return;
         var height = $(document).height();
         $el.css("height", height);
     };
 
+    /**
+     * Remove height styles.
+     */
     var _clearHeights = function() {
         $el.css("height", "");
     };
 
+    /**
+     * Wrapper Object
+     * @type {Object}
+     */
     var offcanvas = {
+        /**
+         * Initialize function for setting styles, options and variables.
+         *
+         * @param  {Object} options custom options to use
+         */
         init: function(options) {
             if (initialized) return;
             console.log('[offcanvas] --init--');
@@ -102,6 +130,9 @@
             $el.trigger("init.offcanvas");
         },
 
+        /**
+         * Function to show container.
+         */
         show: function() {
             console.log('[offcanvas] --show--');
             $el.trigger("show.offcanvas");
@@ -125,6 +156,9 @@
             });
         },
 
+        /**
+         * Function to hide container.
+         */
         hide: function() {
             console.log('[offcanvas] --hide--');
             $el.trigger("hide.offcanvas");
@@ -139,6 +173,11 @@
             });
         },
 
+        /**
+         * Shorthand function to toggle container.
+         *
+         * @param  {Event} e    event object
+         */
         toggle: function(e) {
             e.stopPropagation();
 
@@ -150,6 +189,9 @@
 
         },
 
+        /**
+         * Destroy function to remove all changes and data.
+         */
         destroy: function() {
             if (!initialized) return;
             console.log("[offcanvas] --destroy--");
@@ -167,6 +209,9 @@
         }
     };
 
+    /**
+     * Extend jQuery with function.
+     */
     $.fn.offcanvas = function(arg) {
         if (offcanvas[arg]) {
             return offcanvas[arg].apply(this, Array.prototype.slice.call(arguments, 1));
@@ -177,6 +222,9 @@
         }
     };
 
+    /**
+     * Set defaults.
+     */
     $.fn.offcanvas.defaults = {
         coverage: "200px",
         direction: "left",
