@@ -7,10 +7,12 @@ var gulp = require("gulp"),
     pkg = require("./package.json");
 
 var banner = ["/**",
-    " * <%= pkg.description %> - v<%= pkg.version %> - build: <%= new Date().getTime() %>",
+    " * <%= pkg.description %>",
     " * <%= pkg.homepage %>",
-    " * Copyright (c) 2015 Lars Graubner <mail@larsgraubner.de>",
-    " * License: <%= pkg.license %>",
+    " *",
+    " * @author Lars Graubner <mail@larsgraubner.de>",
+    " * @version <%= pkg.version %>",
+    " * @license <%= pkg.license %>",
     " */",
 ""].join("\n");
 

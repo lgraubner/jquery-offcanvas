@@ -111,10 +111,12 @@
 
             $cont.addClass(settings.classes.container);
 
+            var selector = $el.prop("id") ? "#" + $el.prop("id") :  "." + $el.prop("className").replace(/\s/g, ".");
+
             var style = '<style id="offcanvas-style">' +
                 settings.container + " ." + settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
                 settings.container + " ." + settings.classes.inner + " { position: relative; } " +
-                settings.container + " #" + $el.prop("id") + " { display: block; height: 300px; " + settings.direction + ": -" + settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
+                settings.container + " " + selector + " { display: block; height: 300px; " + settings.direction + ": -" + settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
                 "</style>";
 
             $head.append(style);
