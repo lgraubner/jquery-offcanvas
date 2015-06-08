@@ -1,11 +1,11 @@
 {
   "name": "jquery.offcanvas",
-  "description": "jQuery offcanvas plugin",
-  "version": "0.2.2",
+  "description": "Easy to use jQuery offcanvas plugin",
+  "version": "0.2.3",
   "homepage": "https://github.com/lgraubner/offcanvas",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "~3.8.11",
+    "gulp": "~3.9.0",
     "gulp-uglify": "~1.1.0",
     "gulp-jshint": "~1.10.0",
     "gulp-header": "~1.2.2",
