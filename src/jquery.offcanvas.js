@@ -2,12 +2,13 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
+ * @version 0.3.3
+ * @license MIT
  */
 ;(function($) {
     "use strict";
 
-    var settings, $el, $cont, $outerWrapper, $innerWrapper, $trigger, $win, open,
-        initialized = false,
+    var settings, $el, $cont, $outerWrapper, $innerWrapper, $trigger, $win, open, data,
         $head = $("head");
 
     /**
@@ -70,7 +71,7 @@
      * Set height of the container.
      */
     var _setHeights = function() {
-        if (!initialized) return;
+        if (!data.initialized) return;
         var height = $(document).height();
         $el.css("height", height);
     };
@@ -93,13 +94,14 @@
          * @param  {Object} options custom options to use
          */
         init: function(options) {
-            if (initialized) return;
+            data = $el.data();
+            if (data.initialized) return;
             console.log('[offcanvas] --init--');
             $el = $(this);
 
             $win = $(window);
             open = false;
-            settings = $.extend($.fn.offcanvas.defaults, $el.data(), options);
+            settings = $.extend($.fn.offcanvas.defaults, data, options);
             $el.data("offcanvas", settings);
 
             $cont = $(settings.container);
@@ -128,7 +130,7 @@
             $trigger = $(settings.trigger);
             $trigger.on("click.offcanvas", offcanvas.toggle);
 
-            initialized = true;
+            $el.data("initialized", true);
             $el.trigger("init.offcanvas");
         },
 
@@ -195,7 +197,7 @@
          * Destroy function to remove all changes and data.
          */
         destroy: function() {
-            if (!initialized) return;
+            if (!data.initialized) return;
             console.log("[offcanvas] --destroy--");
             $innerWrapper.unwrap();
             $innerWrapper.children().unwrap();
@@ -206,7 +208,7 @@
             $head.find("#offcanvas-style").remove();
 
             $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas").removeAttr("style");
-            initialized = false;
+            $el.data("initialized", false);
             _clearHeights();
         }
     };

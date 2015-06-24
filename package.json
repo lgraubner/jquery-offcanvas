@@ -1,7 +1,7 @@
 {
   "name": "jquery.offcanvas",
   "description": "Easy to use jQuery offcanvas plugin",
-  "version": "0.2.3",
+  "version": "0.3.3",
   "homepage": "https://github.com/lgraubner/offcanvas",
   "license": "MIT",
   "devDependencies": {
