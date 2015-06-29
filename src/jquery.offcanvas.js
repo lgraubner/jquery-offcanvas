@@ -94,10 +94,10 @@
          * @param  {Object} options custom options to use
          */
         init: function(options) {
+            $el = $(this);
             data = $el.data();
             if (data.initialized) return;
             console.log('[offcanvas] --init--');
-            $el = $(this);
 
             $win = $(window);
             open = false;
