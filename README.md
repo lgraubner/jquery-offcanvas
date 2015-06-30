@@ -11,12 +11,6 @@ An easy to use jQuery offcanvas plugin.
 Initialize:
 
 ```JavaScript
-$("#navigation").offcanvas();
-```
-
-Initialize with options:
-
-```JavaScript
 $("#navigation").offcanvas({
     trigger: ".js-toggle-nav",
     direction: "left"
@@ -46,7 +40,7 @@ $("#navigation").on("shown.offcanvas", function() {
 via data-Attributes
 
 ```HTML
-<div id="navigation" data-direction="right" data-trigger="#button">
+<div id="navigation" data-offcanvas-direction="right" data-offcanvas-trigger="#button">
     ...
 </div>
 ```
@@ -58,7 +52,6 @@ $.fn.offcanvas.defaults = {
     coverage: "200px",
     direction: "left",
     trigger: "#nav-trigger",
-    container: "body",
     duration: 200,
     classes: {
         inner: "offcanvas-inner",

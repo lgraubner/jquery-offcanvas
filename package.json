@@ -1,7 +1,7 @@
 {
   "name": "jquery.offcanvas",
   "description": "Easy to use jQuery offcanvas plugin",
-  "version": "0.3.4",
+  "version": "1.0.0",
   "homepage": "https://github.com/lgraubner/offcanvas",
   "license": "MIT",
   "devDependencies": {
@@ -24,7 +24,6 @@
     "jquery": ">=1.7"
   },
   "scripts": {
-    "build": "gulp build",
-    "test": "mocha --reporter spec --timeout 5000"
+    "build": "gulp build"
   }
 }

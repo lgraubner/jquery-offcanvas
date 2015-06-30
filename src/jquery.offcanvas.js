@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 0.3.3
+ * @version 1.0.0
  * @license MIT
  */
 ;(function($) {
@@ -71,7 +71,9 @@
      * Set height of the container.
      */
     var _setHeights = function() {
-        if (!data.initialized) return;
+        if (!$el.data("offcanvas.opts"))
+            return; // already initialized
+
         var height = $(document).height();
         $el.css("height", height);
     };
@@ -94,15 +96,22 @@
          * @param  {Object} options custom options to use
          */
         init: function(options) {
+            console.log('[offcanvas] --init--');
+
             $el = $(this);
             data = $el.data();
-            if (data.initialized) return;
-            console.log('[offcanvas] --init--');
+
+            for (var p in data) {
+                if (data.hasOwnProperty(p) && /^offcanvas[A-Z]+/.test(p)) {
+                    var shortName = p[9].toLowerCase() + p.substr(10);
+                    data[shortName] = data[p];
+                }
+            }
 
             $win = $(window);
             open = false;
             settings = $.extend($.fn.offcanvas.defaults, data, options);
-            $el.data("offcanvas", settings);
+            $el.data("offcanvas.opts", settings);
 
             $cont = $(settings.container);
             $cont.children(":not(script)").wrapAll('<div class="' + settings.classes.outer + '"/>');
@@ -130,7 +139,6 @@
             $trigger = $(settings.trigger);
             $trigger.on("click.offcanvas", offcanvas.toggle);
 
-            $el.data("initialized", true);
             $el.trigger("init.offcanvas");
         },
 
@@ -197,7 +205,9 @@
          * Destroy function to remove all changes and data.
          */
         destroy: function() {
-            if (!data.initialized) return;
+            if (!$el.data("offcanvas.opts"))
+                return; // already initialized
+
             console.log("[offcanvas] --destroy--");
             $innerWrapper.unwrap();
             $innerWrapper.children().unwrap();
@@ -208,7 +218,7 @@
             $head.find("#offcanvas-style").remove();
 
             $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas").removeAttr("style");
-            $el.data("initialized", false);
+            $el.removeData("offcanvas.opts");
             _clearHeights();
         }
     };
