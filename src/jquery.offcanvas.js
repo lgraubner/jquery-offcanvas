@@ -2,14 +2,22 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 1.0.0
+ * @version 1.0.1
  * @license MIT
  */
 ;(function($) {
     "use strict";
 
-    var settings, $el, $cont, $outerWrapper, $innerWrapper, $trigger, $win, open, data,
-        $head = $("head");
+    var settings;
+    var $el;
+    var $cont;
+    var $outerWrapper;
+    var $innerWrapper;
+    var $trigger;
+    var $win;
+    var open;
+    var data;
+    var $head = $("head");
 
     /**
      * Get supported Prefix
