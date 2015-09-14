@@ -2,22 +2,13 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 1.0.1
+ * @version 1.1.0
  * @license MIT
  */
-;(function($) {
+;(function(window, document, $, undefined) {
     "use strict";
 
-    var settings;
-    var $el;
-    var $cont;
-    var $outerWrapper;
-    var $innerWrapper;
-    var $trigger;
-    var $win;
-    var open;
-    var data;
-    var $head = $("head");
+    var pluginName = "offcanvas";
 
     /**
      * Get supported Prefix
@@ -25,7 +16,7 @@
      * @param  {object} prefixes object containing possible prefixes
      * @return {string}          supported prefix
      */
-    var _getPrefix = function(prefixes) {
+    var getPrefix = function(prefixes) {
         var p;
         var el = document.createElement('div');
 
@@ -39,140 +30,113 @@
     };
 
     /**
-     * Animate container with CSS3, using jQuery as fallback.
+     * Plugin constructor.
      *
-     * @param  {number}   position  position to animate to
-     * @param  {Function} callback  callback function
+     * @param {Object} element element to use
+     * @param {Object} options options to use
      */
-    var _animate = function(position, callback) {
-        var cssTransform = _getPrefix({
-                'transform': 'transform',
-                'WebkitTransform': '-webkit-transform',
-                'MozTransform': '-moz-transform',
-                'OTransform': '-o-transform',
-                'msTransform': '-ms-transform'
-            });
+    function Plugin(element, options) {
+        this.$el = $(element);
+        var data = this.$el.data();
 
-        var cssTransitionEnd = _getPrefix({
-                'transition': 'transitionend',
-                'OTransition': 'oTransitionEnd',
-                'MozTransition': 'transitionend',
-                'WebkitTransition': 'webkitTransitionEnd'
-            });
-
-        if (cssTransform && cssTransitionEnd) {
-            $innerWrapper.one(cssTransitionEnd, callback);
-
-            $innerWrapper.css({
-                transition: cssTransform + " " + settings.duration + "ms ease",
-                transform: "translateX(" + position + ")"
-            });
-
-        } else {
-            $innerWrapper.animate({
-                left: position
-            }, settings.duration, 'swing', callback);
-        }
-    };
-
-    /**
-     * Set height of the container.
-     */
-    var _setHeights = function() {
-        if (!$el.data("offcanvas.opts"))
-            return; // already initialized
-
-        var height = $(document).height();
-        $el.css("height", height);
-    };
-
-    /**
-     * Remove height styles.
-     */
-    var _clearHeights = function() {
-        $el.css("height", "");
-    };
-
-    /**
-     * Wrapper Object
-     * @type {Object}
-     */
-    var offcanvas = {
-        /**
-         * Initialize function for setting styles, options and variables.
-         *
-         * @param  {Object} options custom options to use
-         */
-        init: function(options) {
-            console.log('[offcanvas] --init--');
-
-            $el = $(this);
-            data = $el.data();
-
-            for (var p in data) {
-                if (data.hasOwnProperty(p) && /^offcanvas[A-Z]+/.test(p)) {
-                    var shortName = p[9].toLowerCase() + p.substr(10);
-                    data[shortName] = data[p];
-                }
+        for (var p in data) {
+            if (data.hasOwnProperty(p) && /^offcanvas[A-Z]+/.test(p)) {
+                var shortName = p[pluginName.length].toLowerCase() + p.substr(pluginName.length + 1);
+                data[shortName] = data[p];
             }
+        }
 
-            $win = $(window);
-            open = false;
-            settings = $.extend($.fn.offcanvas.defaults, data, options);
-            $el.data("offcanvas.opts", settings);
+        this.settings = $.extend(true, {}, $.fn[pluginName].defaults, options, data);
+        this._name = pluginName;
+        this.$el.data(this._name + ".opts", this.settings);
 
-            $cont = $(settings.container);
-            $cont.children(":not(script)").wrapAll('<div class="' + settings.classes.outer + '"/>');
+        this.init();
+    }
 
-            $outerWrapper = $("." + settings.classes.outer);
-            $outerWrapper.wrapInner('<div class="' + settings.classes.inner + '"/>');
-            $innerWrapper = $("." + settings.classes.inner);
+    /**
+     * Extend prototype with functions.
+     */
+    $.extend(Plugin.prototype, {
 
-            $cont.addClass(settings.classes.container);
+        /**
+         * Animate container with CSS3, using jQuery as fallback.
+         *
+         * @param  {number}   position  position to animate to
+         * @param  {Function} callback  callback function
+         */
+        _animate: function(position, callback) {
+            var cssTransform = getPrefix({
+                    'transform': 'transform',
+                    'WebkitTransform': '-webkit-transform',
+                    'MozTransform': '-moz-transform',
+                    'OTransform': '-o-transform',
+                    'msTransform': '-ms-transform'
+                });
 
-            var selector = $el.prop("id") ? "#" + $el.prop("id") :  "." + $el.prop("className").replace(/\s/g, ".");
+            var cssTransitionEnd = getPrefix({
+                    'transition': 'transitionend',
+                    'OTransition': 'oTransitionEnd',
+                    'MozTransition': 'transitionend',
+                    'WebkitTransition': 'webkitTransitionEnd'
+                });
 
-            var style = '<style id="offcanvas-style">' +
-                settings.container + " ." + settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
-                settings.container + " ." + settings.classes.inner + " { position: relative; } " +
-                settings.container + " " + selector + " { display: block; height: 300px; " + settings.direction + ": -" + settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + settings.coverage + " } " +
-                "</style>";
+            if (cssTransform && cssTransitionEnd) {
+                this.$innerWrapper.one(cssTransitionEnd, callback);
 
-            $head.append(style);
+                this.$innerWrapper.css({
+                    transition: cssTransform + " " + this.settings.duration + "ms ease",
+                    transform: "translateX(" + position + ")"
+                });
 
-            $el.show().on("click.offvanvas touchstart.offcanvas", function(e) {
-                e.stopPropagation();
-            });
+            } else {
+                this.$innerWrapper.animate({
+                    left: position
+                }, this.settings.duration, 'swing', callback);
+            }
+        },
 
-            $trigger = $(settings.trigger);
-            $trigger.on("click.offcanvas", offcanvas.toggle);
+        /**
+         * Set height of the container.
+         */
+        _setHeights: function() {
+            if (!this.$el.data(this._name + ".opts"))
+                return; // already initialized
 
-            $el.trigger("init.offcanvas");
+            var height = this.$doc.height();
+            this.$el.css("height", height);
+        },
+
+        /**
+         * Remove height styles.
+         */
+        _clearHeights: function() {
+            this.$el.css("height", "");
         },
 
         /**
          * Function to show container.
          */
         show: function() {
-            console.log('[offcanvas] --show--');
-            $el.trigger("show.offcanvas");
+            console.log("[" + this._name + "] --show--");
+            this.$el.trigger("show." + this._name);
 
-            _setHeights();
-            $win.on("resize.offcanvas", _setHeights);
+            this._setHeights();
+            this.$win.on("resize." + this._name, $.proxy(this._setHeights, this));
 
-            $cont.addClass(settings.classes.open);
-            open = true;
+            this.$cont.addClass(this.settings.classes.open);
+            this._open = true;
 
-            var position = (settings.direction == "left") ? settings.coverage : "-" + settings.coverage;
-            _animate(position, function() {
-                $cont.one("click.offcanvas touchstart.offcanvas", function(e) {
+            var position = (this.settings.direction == "left") ? this.settings.coverage : "-" + this.settings.coverage;
+            var self = this;
+            this._animate(position, function() {
+                self.$cont.one("click." + self._name + " touchstart." + self._name, function(e) {
                     e.stopPropagation();
                     e.preventDefault();
 
-                    offcanvas.hide();
+                    self.hide();
                 });
 
-                $el.trigger("shown.offcanvas");
+                self.$el.trigger("shown." + self._name);
             });
         },
 
@@ -180,16 +144,17 @@
          * Function to hide container.
          */
         hide: function() {
-            console.log('[offcanvas] --hide--');
-            $el.trigger("hide.offcanvas");
+            console.log("[" + this._name + "] --hide--");
+            this.$el.trigger("hide." + this._name);
 
-            $cont.removeClass(settings.classes.open);
-            open = false;
+            this.$cont.removeClass(this.settings.classes.open);
+            this._open = false;
 
-            _animate(0, function() {
-                _clearHeights();
-                $win.off("resize.oncanvas", _setHeights);
-                $el.trigger("hidden.offcanvas");
+            var self = this;
+            this._animate(0, function() {
+                self._clearHeights();
+                self.$win.off("resize.oncanvas", self._setHeights);
+                self.$el.trigger("hidden." + self._name);
             });
         },
 
@@ -201,10 +166,10 @@
         toggle: function(e) {
             e.stopPropagation();
 
-            if (open) {
-                offcanvas.hide();
+            if (this._open) {
+                this.hide();
             } else {
-                offcanvas.show();
+                this.show();
             }
 
         },
@@ -213,52 +178,109 @@
          * Destroy function to remove all changes and data.
          */
         destroy: function() {
-            if (!$el.data("offcanvas.opts"))
+            if (!this.$el.data(this._name + ".opts"))
                 return; // already initialized
 
-            console.log("[offcanvas] --destroy--");
-            $innerWrapper.unwrap();
-            $innerWrapper.children().unwrap();
+            console.log("[" + this._name + "] --destroy--");
+            this.$innerWrapper.unwrap();
+            this.$innerWrapper.children().unwrap();
 
-            $cont.off("click.offcanvas touchstart.offcanvas").removeClass(settings.classes.container).removeClass(settings.classes.open);
-            $trigger.off("click.offcanvas");
+            this.$cont.off("click." + this._name + " touchstart." + this._name).removeClass(this.settings.classes.container).removeClass(this.settings.classes.open);
+            this.$trigger.off("click." + this._name);
 
-            $head.find("#offcanvas-style").remove();
+            this.$head.find("#" + this._name + "-style").remove();
 
-            $el.off("click.offcanvas touchstart.offcanvas").removeData("offcanvas").removeAttr("style");
-            $el.removeData("offcanvas.opts");
-            _clearHeights();
+            this.$el.off("click." + this._name + " touchstart." + this._name).removeData(this._name + "").removeAttr("style");
+            this.$el.removeData(this._name + ".opts");
+            this._clearHeights();
+        },
+
+        init: function() {
+            console.log("[" + this._name + "] --init--");
+
+            this.$win = $(window);
+            this.$doc = $(document);
+            this.$head = $("head");
+            this._open = false;
+
+            this.$cont = $(this.settings.container);
+            this.$cont.children(":not(script)").wrapAll('<div class="' + this.settings.classes.outer + '"/>');
+
+            this.$outerWrapper = $("." + this.settings.classes.outer);
+            this.$outerWrapper.wrapInner('<div class="' + this.settings.classes.inner + '"/>');
+            this.$innerWrapper = $("." + this.settings.classes.inner);
+
+            this.$cont.addClass(this.settings.classes.container);
+
+            var selector = this.$el.prop("id") ? "#" + this.$el.prop("id") :  "." + this.$el.prop("className").replace(/\s/g, ".");
+
+            var style = '<style id="' + this._name + '-style">' +
+                this.settings.container + " ." + this.settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
+                this.settings.container + " ." + this.settings.classes.inner + " { position: relative; } " +
+                this.settings.container + " " + selector + " { display: block; height: 300px; " + this.settings.direction + ": -" + this.settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + this.settings.coverage + " } " +
+                "</style>";
+
+            this.$head.append(style);
+
+            this.$el.show().on("click.offvanvas touchstart." + this._name, function(e) {
+                e.stopPropagation();
+            });
+
+            this.$trigger = $(this.settings.trigger);
+            this.$trigger.on("click." + this._name, $.proxy(this.toggle, this));
+
+            this.$el.trigger("init." + this._name);
         }
+    });
+
+    /**
+     * Extend jQuery object with the new plugin.
+     */
+    $.fn[pluginName] = function(options) {
+        var args = arguments;
+
+        if (options === undefined || typeof options === "object") {
+            return this.each(function() {
+                if (!$.data(this, "plugin_" + pluginName)) {
+                    $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+                }
+            });
+        } else if (typeof options === "string" && options[0] !== "_" && options !== "init") {
+            var returns;
+
+            this.each(function() {
+                var instance = $.data(this, "plugin_" + pluginName);
+
+                if (instance instanceof Plugin && typeof instance[options] === "function") {
+                    returns = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+                }
+
+                if (options === "destroy") {
+                    $.data(this, 'plugin_' + pluginName, null);
+                }
+            });
+
+            return returns !== undefined ? returns : this;
+        }
+
     };
 
     /**
-     * Extend jQuery with function.
+     * Set plugin defaults.
+     *
+     * @type {Object}
      */
-    $.fn.offcanvas = function(arg) {
-        if (offcanvas[arg]) {
-            return offcanvas[arg].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof arg === 'object' || !arg) {
-            return offcanvas.init.apply(this, arguments);
-        } else {
-            $.error('Method ' + arg + ' does not exist on jquery.offcanvas');
-        }
-    };
-
-    /**
-     * Set defaults.
-     */
-    $.fn.offcanvas.defaults = {
+    $.fn[pluginName].defaults = {
         coverage: "200px",
         direction: "left",
         trigger: "#nav-trigger",
         container: "body",
         duration: 200,
         classes: {
-            inner: "offcanvas-inner",
-            outer: "offcanvas-outer",
-            container: "offcanvas",
-            open: "offcanvas-open"
+            inner: pluginName + "-inner",
+            outer: pluginName + "-outer",
+            container: pluginName,
+            open: pluginName + "-open"
         }
     };
-
-})(jQuery);
+})(window, document, jQuery);
