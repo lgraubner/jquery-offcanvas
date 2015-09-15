@@ -46,7 +46,7 @@ You can also set options via data-Attributes, which will overwrite the default v
 
 ### coverage
 
-Type: `String`
+Type: `String`  
 Default: `200px`
 
 Width of the offcanvas container which will be revealed.
@@ -55,28 +55,28 @@ Width of the offcanvas container which will be revealed.
 
 ### direction
 
-Type: `String`
+Type: `String`  
 Default: `left`
 
 Direction the offcanvas is revealed from. Possible values are `left` and `right`.
 
 ### trigger
 
-Type: `String`
+Type: `String`  
 Default: `.js-toggle-offcanvas`
 
 CSS selector for the trigger button.
 
 ### duration
 
-Type: `number`
+Type: `number`  
 Default: `200`
 
 Duration of the animation.
 
 ### classes
 
-Type: `object`
+Type: `object`  
 Default:
 ```JavaScript
 {
