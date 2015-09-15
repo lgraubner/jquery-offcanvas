@@ -13,8 +13,8 @@ var banner = ["/**",
     " * <%= pkg.description %>",
     " * <%= pkg.homepage %>",
     " *",
-    " * Made by <%= pkg.author %>",
-    " * Under <%= pkg.license %>",
+    " * Copyright <%= pkg.author %>",
+    " * Under <%= pkg.license %> License",
     " */",
 ""].join("\n");
 

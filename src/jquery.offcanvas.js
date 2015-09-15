@@ -273,7 +273,7 @@
     $.fn[pluginName].defaults = {
         coverage: "200px",
         direction: "left",
-        trigger: "#nav-trigger",
+        trigger: ".js-toggle-offcanvas",
         container: "body",
         duration: 200,
         classes: {
