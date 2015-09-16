@@ -36,7 +36,7 @@ $("#container").offcanvas({
 });
 ```
 
-You can also set options via data-Attributes, which will overwrite the default value and values specified on initialization:
+You can also set options via data-Attributes, which will overwrite the default value and the value specified on initialization:
 
 ```HTML
 <div id="container" data-offcanvas-direction="right" data-offcanvas-trigger="#button">
