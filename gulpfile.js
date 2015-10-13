@@ -4,6 +4,7 @@ var header = require("gulp-header");
 var rename = require("gulp-rename");
 var stripDebug = require("gulp-strip-debug");
 var jshint = require("gulp-jshint");
+var mochaPhantomjs = require("gulp-mocha-phantomjs");
 var pkg = require("./package.json");
 
 var pluginName = pkg.name.replace(/-/g, ".");
@@ -18,7 +19,7 @@ var banner = ["/**",
     " */",
 ""].join("\n");
 
-gulp.task("build", function() {
+gulp.task("build", ["lint", "test"], function() {
     return gulp.src("src/" + pluginName + ".js")
         .pipe(stripDebug())
         .pipe(uglify())
@@ -33,4 +34,11 @@ gulp.task("lint", function() {
         .pipe(jshint.reporter("jshint-stylish"));
 });
 
-gulp.task("default", ["lint", "build"]);
+gulp.task("test", function() {
+    return gulp.src("test/runner.html")
+        .pipe(mochaPhantomjs({
+            reporter: "spec"
+        }));
+});
+
+gulp.task("default", ["build"]);
