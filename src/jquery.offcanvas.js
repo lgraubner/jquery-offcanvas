@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 1.1.0
+ * @version 2.0.0
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -11,23 +11,23 @@
     var pluginName = "offcanvas";
 
     /**
-     * Get supported Prefix
-     *
-     * @param  {object} prefixes object containing possible prefixes
-     * @return {string}          supported prefix
+     * Helper function to delay function calls.
+     * http://davidwalsh.name/javascript-debounce-function
      */
-    var getPrefix = function(prefixes) {
-        var p;
-        var el = document.createElement('div');
-
-        for(p in prefixes){
-            if( el.style[p] !== undefined ){
-                return prefixes[p];
-            }
-        }
-
-        return false;
-    };
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
 
     /**
      * Plugin constructor.
@@ -57,44 +57,6 @@
      * Extend prototype with functions.
      */
     $.extend(Plugin.prototype, {
-
-        /**
-         * Animate container with CSS3, using jQuery as fallback.
-         *
-         * @param  {number}   position  position to animate to
-         * @param  {Function} callback  callback function
-         */
-        _animate: function(position, callback) {
-            var cssTransform = getPrefix({
-                    'transform': 'transform',
-                    'WebkitTransform': '-webkit-transform',
-                    'MozTransform': '-moz-transform',
-                    'OTransform': '-o-transform',
-                    'msTransform': '-ms-transform'
-                });
-
-            var cssTransitionEnd = getPrefix({
-                    'transition': 'transitionend',
-                    'OTransition': 'oTransitionEnd',
-                    'MozTransition': 'transitionend',
-                    'WebkitTransition': 'webkitTransitionEnd'
-                });
-
-            if (cssTransform && cssTransitionEnd) {
-                this.$innerWrapper.one(cssTransitionEnd, callback);
-
-                this.$innerWrapper.css({
-                    transition: cssTransform + " " + this.settings.duration + "ms ease",
-                    transform: "translateX(" + position + ")"
-                });
-
-            } else {
-                this.$innerWrapper.animate({
-                    left: position
-                }, this.settings.duration, 'swing', callback);
-            }
-        },
-
         /**
          * Set height of the container.
          */
@@ -104,6 +66,7 @@
 
             var height = this.$doc.height();
             this.$el.css("height", height);
+            this.$overlay.css("height", height);
         },
 
         /**
@@ -120,23 +83,32 @@
             console.log("[" + this._name + "] --show--");
             this.$el.trigger("show." + this._name);
 
-            this._setHeights();
-            this.$win.on("resize." + this._name, $.proxy(this._setHeights, this));
-
             this.$cont.addClass(this.settings.classes.open);
             this._open = true;
 
+            this._setHeights();
+
             var position = (this.settings.direction == "left") ? this.settings.coverage : "-" + this.settings.coverage;
             var self = this;
-            this._animate(position, function() {
-                self.$cont.one("click." + self._name + " touchstart." + self._name, function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
 
-                    self.hide();
-                });
+            this.$innerWrapper.velocity("stop").velocity({
+                left: position
+            }, {
+                easing: this.settings.easing,
+                duration: this.settings.duration,
+                complete: function() {
+                    self.$overlay.one("click." + self._name, function(e) {
+                        self.hide();
+                    });
+                }
+            });
 
-                self.$el.trigger("shown." + self._name);
+            this.$overlay.velocity({
+                opacity: 1
+            }, {
+                easing: this.settings.easing,
+                duration: this.settings.duration,
+                display: "block"
             });
         },
 
@@ -151,10 +123,22 @@
             this._open = false;
 
             var self = this;
-            this._animate(0, function() {
-                self._clearHeights();
-                self.$win.off("resize.oncanvas", self._setHeights);
-                self.$el.trigger("hidden." + self._name);
+            this.$innerWrapper.velocity("stop").velocity({
+                left: 0
+            }, {
+                easing: this.settings.easing,
+                duration: this.settings.duration,
+                complete: function() {
+                    self.$el.trigger("hidden." + self._name);
+                }
+            });
+
+            this.$overlay.velocity({
+                opacity: 0
+            }, {
+                easing: this.settings.easing,
+                duration: this.settings.duration,
+                display: "none"
             });
         },
 
@@ -164,14 +148,13 @@
          * @param  {Event} e    event object
          */
         toggle: function(e) {
-            e.stopPropagation();
+            e.preventDefault();
 
             if (this._open) {
                 this.hide();
             } else {
                 this.show();
             }
-
         },
 
         /**
@@ -185,14 +168,17 @@
             this.$innerWrapper.unwrap();
             this.$innerWrapper.children().unwrap();
 
-            this.$cont.off("click." + this._name + " touchstart." + this._name).removeClass(this.settings.classes.container).removeClass(this.settings.classes.open);
+            this.$cont.removeClass(this.settings.classes.container).removeClass(this.settings.classes.open);
             this.$trigger.off("click." + this._name);
 
             this.$head.find("#" + this._name + "-style").remove();
 
-            this.$el.off("click." + this._name + " touchstart." + this._name).removeData(this._name + "").removeAttr("style");
-            this.$el.removeData(this._name + ".opts");
+            this.$overlay.off("click." + this._name).remove();
+
+            this.$el.removeData(this._name + ".opts").removeAttr("style");
+
             this._clearHeights();
+            this.$win.off("resize." + this._name);
         },
 
         init: function() {
@@ -218,13 +204,18 @@
                 this.settings.container + " ." + this.settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
                 this.settings.container + " ." + this.settings.classes.inner + " { position: relative; } " +
                 this.settings.container + " " + selector + " { display: block; height: 300px; " + this.settings.direction + ": -" + this.settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + this.settings.coverage + " } " +
+                "." + this.settings.classes.overlay + " { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; }" +
                 "</style>";
 
             this.$head.append(style);
 
-            this.$el.show().on("click.offvanvas touchstart." + this._name, function(e) {
-                e.stopPropagation();
-            });
+            this.$innerWrapper.append($("<div/>").addClass(this.settings.classes.overlay));
+            this.$overlay = $("." + this.settings.classes.overlay);
+
+            this.$el.show();
+
+            this.$win.on("resize." + this._name, $.proxy(debounce(this._setHeights, 300), this));
+            this._setHeights();
 
             this.$trigger = $(this.settings.trigger);
             this.$trigger.on("click." + this._name, $.proxy(this.toggle, this));
@@ -271,16 +262,18 @@
      * @type {Object}
      */
     $.fn[pluginName].defaults = {
-        coverage: "200px",
-        direction: "left",
-        trigger: ".js-toggle-offcanvas",
-        container: "body",
-        duration: 200,
         classes: {
-            inner: pluginName + "-inner",
-            outer: pluginName + "-outer",
             container: pluginName,
-            open: pluginName + "-open"
-        }
+            inner: pluginName + "-inner",
+            open: pluginName + "-open",
+            outer: pluginName + "-outer",
+            overlay: pluginName + "-overlay"
+        },
+        container: "body",
+        coverage: "220px",
+        direction: "left",
+        duration: 350,
+        easing: "ease-in-out",
+        trigger: ".js-toggle-offcanvas"
     };
 })(window, document, jQuery);
