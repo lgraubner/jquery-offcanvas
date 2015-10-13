@@ -3,6 +3,8 @@
 
 This plugin provides an easy way to put content outside of the canvas and reveal it with a click on a button or any desired element. This is a useful pattern for mobile navigations and more.
 
+[Demo](http://lgraubner.github.io/jquery-offcanvas/)
+
 ## Dependencies
 
 As this is a jQuery plugin it depends on the [jQuery library](http://jquery.com/) v1.7+. For smooth animations [Velocity.js](https://github.com/julianshapiro/velocity) is used. Both dependencies are required.
