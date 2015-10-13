@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 2.0.0
+ * @version 2.0.1
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
