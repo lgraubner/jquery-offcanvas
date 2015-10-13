@@ -204,7 +204,7 @@
                 this.settings.container + " ." + this.settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
                 this.settings.container + " ." + this.settings.classes.inner + " { position: relative; } " +
                 this.settings.container + " " + selector + " { display: block; height: 300px; " + this.settings.direction + ": -" + this.settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + this.settings.coverage + " } " +
-                "." + this.settings.classes.overlay + " { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; }" +
+                "." + this.settings.classes.overlay + " { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; z-index: 10001; }" +
                 "</style>";
 
             this.$head.append(style);
