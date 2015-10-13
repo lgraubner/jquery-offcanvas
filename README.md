@@ -14,10 +14,7 @@ As this is a jQuery plugin it depends on the [jQuery library](http://jquery.com/
 Initialization:
 
 ```JavaScript
-$("#offcanvas").offcanvas({
-    trigger: ".js-toggle-nav",
-    direction: "left"
-});
+$("#offcanvas").offcanvas();
 ```
 
 Clicks on the trigger element will toggle the offcanvas.
