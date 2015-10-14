@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 2.0.1
+ * @version 2.1.0
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -147,9 +147,7 @@
          *
          * @param  {Event} e    event object
          */
-        toggle: function(e) {
-            e.preventDefault();
-
+        toggle: function() {
             if (this._open) {
                 this.hide();
             } else {
@@ -169,7 +167,6 @@
             this.$innerWrapper.children().unwrap();
 
             this.$cont.removeClass(this.settings.classes.container).removeClass(this.settings.classes.open);
-            this.$trigger.off("click." + this._name);
 
             this.$head.find("#" + this._name + "-style").remove();
 
@@ -216,9 +213,6 @@
 
             this.$win.on("resize." + this._name, $.proxy(debounce(this._setHeights, 300), this));
             this._setHeights();
-
-            this.$trigger = $(this.settings.trigger);
-            this.$trigger.on("click." + this._name, $.proxy(this.toggle, this));
 
             this.$el.trigger("init." + this._name);
         }
@@ -273,7 +267,6 @@
         coverage: "220px",
         direction: "left",
         duration: 350,
-        easing: "ease-in-out",
-        trigger: ".js-toggle-offcanvas"
+        easing: "ease-in-out"
     };
 })(window, document, jQuery);

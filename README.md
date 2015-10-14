@@ -14,12 +14,14 @@ As this is a jQuery plugin it depends on the [jQuery library](http://jquery.com/
 Initialization:
 
 ```JavaScript
-$("#offcanvas").offcanvas({
-    trigger: ".js-toggle-offcanvas"
+var $el = $("#element").offcanvas();
+
+$(".offcanvas-trigger").on("click", function() {
+    $el.offcanvas("toggle");
 });
 ```
 
-Clicks on the trigger element will toggle the offcanvas.
+Clicks on the trigger element will toggle the offcanvas element.
 
 **Do not try to initialize more than one instance of jQuery.offcanvas on one page!**
 
@@ -28,9 +30,8 @@ Clicks on the trigger element will toggle the offcanvas.
 Options can be set on initialization:
 
 ```JavaScript
-$("#offcanvas").offcanvas({
-    trigger: ".js-toggle-offcanvas",
-    direction: "left",
+$("#element").offcanvas({
+    direction: "right",
     duration: 400
 });
 ```
@@ -38,7 +39,7 @@ $("#offcanvas").offcanvas({
 You can also set options via data-Attributes, which will overwrite the default value and the value specified on initialization:
 
 ```HTML
-<div id="offcanvas" data-offcanvas-direction="right" data-offcanvas-trigger="#button">
+<div id="element" data-offcanvas-duration="200" data-offcanvas-easing="ease">
     ...
 </div>
 ```
@@ -80,7 +81,7 @@ Width of the offcanvas element which will be revealed.
 Type: `String`  
 Default: `left`
 
-Direction the offcanvas is revealed from. Possible values are `left` and `right`.
+Direction the offcanvas element is revealed from. Possible values are `left` and `right`.
 
 ### duration
 
@@ -101,32 +102,25 @@ Easing type for show and hide animations. You can use:
 
 For more easing options check the [Velocity.js documentation](http://julian.com/research/velocity/#easing).
 
-### trigger
-
-Type: `String`  
-Default: `.js-toggle-offcanvas`
-
-CSS selector for the trigger button.
-
 ## API
 
-The offcanvas API offers a couple of methods to control the offcanvas. The methods are called like this:
+The offcanvas API offers a couple of methods to control the offcanvas element. The methods are called like this:
 
 ```JavaScript
-$("#offcanvas").offcanvas("show");
+$("#element").offcanvas("show");
 ```
 
 ### show
 
-Shows the offcanvas.
+Shows the offcanvas element.
 
 ### hide
 
-Hides the offcanvas.
+Hides the offcanvas element.
 
 ### toggle
 
-Toggles the offcanvas.
+Toggles the offcanvas element.
 
 ### destroy
 
@@ -137,7 +131,7 @@ Destroys the jQuery.offcanvas instance and reverts all DOM changes.
 jQuery.offcanvas fires several events. Simply listen for them with the `jQuery.on` function. All events are namespaced with `offcanvas`.
 
 ```JavaScript
-$("#offcanvas").on("shown.offcanvas", function() {
+$("#element").on("shown.offcanvas", function() {
     // do stuff when offcanvas is revealed and animation is finished
 });
 ```
@@ -167,7 +161,7 @@ Fired when the `hide` animation finished.
 To avoid flickering on page load hide the offcanvas element via CSS. It will be automatically shown before the plugin slides it into viewport.
 
 ```CSS
-#offcanvas {
+#element {
     display: none;
 }
 ```
