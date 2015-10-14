@@ -75,7 +75,7 @@ Default:
 
 Classes which will be applied to the elements.
 
-**If you change class names make sure to update the them in the CSS file accordingly.**
+**If you change class names make sure to update them in the CSS file accordingly.**
 
 ### container
 
