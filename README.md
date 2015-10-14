@@ -1,9 +1,9 @@
 # jQuery.offcanvas
-> An easy to use offcanvas plugin.
+> An easy to use jQuery offcanvas plugin.
 
 This plugin provides an easy way to put content outside of the canvas and reveal it with a click on a button or any desired element. This is a useful pattern for mobile navigations and more.
 
-[Demo](http://lgraubner.github.io/jquery-offcanvas/)
+[Demo](http://lgraubner.github.io/jquery-offcanvas/) | [Download](https://raw.githubusercontent.com/lgraubner/jquery-offcanvas/master/dist/jquery.offcanvas.min.js)
 
 ## Dependencies
 
