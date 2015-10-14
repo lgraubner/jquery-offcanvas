@@ -65,15 +65,8 @@
                 return; // already initialized
 
             var height = this.$doc.height();
-            this.$el.css("height", height);
+            this.$el.parent().css("height", height);
             this.$overlay.css("height", height);
-        },
-
-        /**
-         * Remove height styles.
-         */
-        _clearHeights: function() {
-            this.$el.css("height", "");
         },
 
         /**
@@ -168,13 +161,10 @@
 
             this.$cont.removeClass(this.settings.classes.container).removeClass(this.settings.classes.open);
 
-            this.$head.find("#" + this._name + "-style").remove();
-
             this.$overlay.off("click." + this._name).remove();
 
-            this.$el.removeData(this._name + ".opts").removeAttr("style");
+            this.$el.unwrap().removeData(this._name + ".opts").removeAttr("style");
 
-            this._clearHeights();
             this.$win.off("resize." + this._name);
         },
 
@@ -183,33 +173,28 @@
 
             this.$win = $(window);
             this.$doc = $(document);
-            this.$head = $("head");
             this._open = false;
 
-            this.$cont = $(this.settings.container);
-            this.$cont.children(":not(script)").wrapAll('<div class="' + this.settings.classes.outer + '"/>');
+            this.$cont = $(this.settings.container)
+                .addClass(this.settings.classes.container)
+                .children(":not(script)").wrapAll($("<div/>").addClass(this.settings.classes.outer));
 
-            this.$outerWrapper = $("." + this.settings.classes.outer);
-            this.$outerWrapper.wrapInner('<div class="' + this.settings.classes.inner + '"/>');
+            this.$outerWrapper = $("." + this.settings.classes.outer)
+                .wrapInner($("<div/>").addClass(this.settings.classes.inner));
             this.$innerWrapper = $("." + this.settings.classes.inner);
-
-            this.$cont.addClass(this.settings.classes.container);
-
-            var selector = this.$el.prop("id") ? "#" + this.$el.prop("id") :  "." + this.$el.prop("className").replace(/\s/g, ".");
-
-            var style = '<style id="' + this._name + '-style">' +
-                this.settings.container + " ." + this.settings.classes.outer + " { left: 0; overflow-x: hidden; position: absolute; top: 0; width: 100%; } " +
-                this.settings.container + " ." + this.settings.classes.inner + " { position: relative; } " +
-                this.settings.container + " " + selector + " { display: block; height: 300px; " + this.settings.direction + ": -" + this.settings.coverage + "; margin: 0; overflow: hidden; position: absolute; top: 0; width: " + this.settings.coverage + " } " +
-                "." + this.settings.classes.overlay + " { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; z-index: 10001; }" +
-                "</style>";
-
-            this.$head.append(style);
 
             this.$innerWrapper.append($("<div/>").addClass(this.settings.classes.overlay));
             this.$overlay = $("." + this.settings.classes.overlay);
 
-            this.$el.show();
+            this.$el.wrap($("<div/>").addClass(this.settings.classes.element));
+
+            var css = {
+                width: this.settings.coverage
+            };
+            css[this.settings.direction] = "-" + this.settings.coverage;
+            console.log(css);
+            this.$el.parent().css(css)
+                .show();
 
             this.$win.on("resize." + this._name, $.proxy(debounce(this._setHeights, 300), this));
             this._setHeights();
@@ -258,6 +243,7 @@
     $.fn[pluginName].defaults = {
         classes: {
             container: pluginName,
+            element: pluginName + "-element",
             inner: pluginName + "-inner",
             open: pluginName + "-open",
             outer: pluginName + "-outer",

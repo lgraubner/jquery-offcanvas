@@ -3,13 +3,27 @@
 
 This plugin provides an easy way to put content outside of the canvas and reveal it with a click on a button or any desired element. This is a useful pattern for mobile navigations and more.
 
-[Demo](http://lgraubner.github.io/jquery-offcanvas/) | [Download](https://raw.githubusercontent.com/lgraubner/jquery-offcanvas/master/dist/jquery.offcanvas.min.js)
+[Demo](http://lgraubner.github.io/jquery-offcanvas/) | [Download](https://github.com/lgraubner/jquery-offcanvas/releases/latest)
 
 ## Dependencies
 
 As this is a jQuery plugin it depends on the [jQuery library](http://jquery.com/) v1.7+. For smooth animations [Velocity.js](https://github.com/julianshapiro/velocity) is used. Both dependencies are required.
 
 ## Usage
+
+Include jQuery, Velocity.js and the plugin before the closing `body` tag:
+
+```HTML
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="path/to/velocity.min.js"></script>
+<script src="path/to/jquery.offcanvas.min.js"></script>
+```
+
+Include the CSS file:
+
+```HTML
+<link rel="stylesheet" href="path/to/jquery.offcanvas.min.css">
+```
 
 Initialization:
 
@@ -51,6 +65,7 @@ Default:
 ```JavaScript
 {
     container: "offcanvas",
+    element: "offcanvas-element",
     inner: "offcanvas-inner",
     open: "offcanvas-open",
     outer: "offcanvas-outer",
@@ -59,6 +74,8 @@ Default:
 ```
 
 Classes which will be applied to the elements.
+
+**If you change any class names make sure to update the class names in the CSS file accordingly.**
 
 ### container
 
@@ -157,14 +174,6 @@ Fired when the `hide` method is called.
 Fired when the `hide` animation finished.
 
 ## Tips
-
-To avoid flickering on page load hide the offcanvas element via CSS. It will be automatically shown before the plugin slides it into viewport.
-
-```CSS
-#element {
-    display: none;
-}
-```
 
 You can grey out your content while the offcanvas element is shown. Simply style the `.offcanvas-overlay` element. The following example overlays the content with a black transparent overlay. It will be display with a smooth animation.
 

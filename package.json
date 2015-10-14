@@ -1,9 +1,9 @@
 {
   "name": "jquery-offcanvas",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Easy to use jQuery offcanvas plugin.",
   "author": "Lars Graubner <mail@larsgraubner.de>",
-  "homepage": "https://github.com/lgraubner/jquery-offcanvas",
+  "homepage": "http://lgraubner.github.io/jquery-offcanvas/",
   "main": "dist/jquery.offcanvas.min.js",
   "repository": {
     "type": "git",
@@ -20,10 +20,12 @@
     "gulp-uglify": "^1.4.2",
     "gulp-header": "^1.7.1",
     "gulp-rename": "^1.2.2",
+    "gulp-minify-css": "^1.2.1",
     "gulp-jshint": "^1.11.2",
     "gulp-strip-debug": "^1.0.2",
     "jshint-stylish": "^2.0.1",
     "gulp-mocha-phantomjs": "^0.10.1",
+    "run-sequence": "^1.1.4",
     "mocha": "^2.3.3",
     "should": "^7.1.0"
   },

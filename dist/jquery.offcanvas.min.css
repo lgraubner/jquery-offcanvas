@@ -1,0 +1,9 @@
+/**
+ * jquery-offcanvas - v2.2.0
+ * Easy to use jQuery offcanvas plugin.
+ * http://lgraubner.github.io/jquery-offcanvas/
+ *
+ * Copyright Lars Graubner <mail@larsgraubner.de>
+ * Under MIT License
+ */
+.offcanvas{left:0;overflow-x:hidden;position:absolute;top:0;width:100%}.offcanvas-inner{position:relative}.offcanvas-element{margin:0;overflow:hidden;position:absolute;top:0;display:none}.offcanvas-overlay{display:none;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:10001}
