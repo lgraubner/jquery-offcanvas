@@ -14,21 +14,23 @@ As this is a jQuery plugin it depends on the [jQuery library](http://jquery.com/
 
 ## Usage
 
-Include jQuery, Velocity.js and the plugin before the closing `body` tag:
+You can install this module either with npm or download it manually. Include jQuery, Velocity.js and the plugin before the closing `body` tag:
 
 ```HTML
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="path/to/velocity.min.js"></script>
-<script src="path/to/jquery.offcanvas.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/velocity-animate/velocity.min.js"></script>
+<script src="node_modules/jquery-offcanvas/dist/jquery.offcanvas.min.js"></script>
 ```
 
 Include the CSS file:
 
 ```HTML
-<link rel="stylesheet" href="path/to/jquery.offcanvas.min.css">
+<link rel="stylesheet" href="node_modules/jquery-offcanvas/dist/jquery.offcanvas.min.css">
 ```
 
-Initialization:
+If you are not using npm just adjust the paths to match the file locations.
+
+### Initialization
 
 ```JavaScript
 var $el = $("#element").offcanvas();
@@ -42,7 +44,7 @@ Clicks on the trigger element will toggle the offcanvas element.
 
 **Do not try to initialize more than one instance of jQuery.offcanvas on one page!**
 
-### Options
+## Options
 
 Options can be set on initialization:
 

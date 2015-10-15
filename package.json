@@ -9,8 +9,9 @@
     "ecosystem:jquery",
     "offcanvas",
     "canvas",
-    "navigation",
-    "mobile"
+    "animation",
+    "mobile",
+    "velocity"
   ],
   "main": "dist/jquery.offcanvas.min.js",
   "repository": {
@@ -21,7 +22,8 @@
     "url": "https://github.com/lgraubner/jquery-offcanvas/issues"
   },
   "dependencies": {
-    "jquery": ">=1.7.0"
+    "jquery": ">=1.7.0",
+    "velocity-animate": "^1.2.3"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
