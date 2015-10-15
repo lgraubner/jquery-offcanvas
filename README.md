@@ -1,4 +1,7 @@
 # jQuery.offcanvas
+
+[![npm](https://img.shields.io/npm/v/jquery-offcanvas.svg)](https://www.npmjs.com/package/jquery-offcanvas)
+
 > An easy to use jQuery offcanvas plugin.
 
 This plugin provides an easy way to put content outside of the canvas and reveal it with a click on a button or any desired element. This is a useful pattern for mobile navigations and more.

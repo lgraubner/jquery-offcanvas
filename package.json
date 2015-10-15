@@ -4,13 +4,21 @@
   "description": "Easy to use jQuery offcanvas plugin.",
   "author": "Lars Graubner <mail@larsgraubner.de>",
   "homepage": "http://lgraubner.github.io/jquery-offcanvas/",
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "offcanvas",
+    "canvas",
+    "navigation",
+    "mobile"
+  ],
   "main": "dist/jquery.offcanvas.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/lgraubner/jquery-offcanvas.git"
   },
   "bugs": {
-      "url": "https://github.com/lgraubner/jquery-offcanvas/issues"
+    "url": "https://github.com/lgraubner/jquery-offcanvas/issues"
   },
   "dependencies": {
     "jquery": ">=1.7.0"
