@@ -1,5 +1,5 @@
 /**
- * jquery-offcanvas - v2.2.1
+ * jquery-offcanvas - v2.2.3
  * Easy to use jQuery offcanvas plugin.
  * http://lgraubner.github.io/jquery-offcanvas/
  *
