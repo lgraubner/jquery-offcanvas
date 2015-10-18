@@ -176,8 +176,8 @@
             this.$doc = $(document);
             this._open = false;
 
-            this.$cont = $(this.settings.container)
-                .addClass(this.settings.classes.container)
+            this.$cont = $(this.settings.container);
+            this.$cont.addClass(this.settings.classes.container)
                 .children(":not(script)").wrapAll($("<div/>").addClass(this.settings.classes.outer));
 
             this.$outerWrapper = $("." + this.settings.classes.outer)
