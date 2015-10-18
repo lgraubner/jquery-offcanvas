@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 2.2.1
+ * @version 2.2.4
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -90,6 +90,7 @@
                 easing: this.settings.easing,
                 duration: this.settings.duration,
                 complete: function() {
+                    self.$el.trigger("shown." + self._name);
                     self.$overlay.one("click." + self._name, function(e) {
                         self.hide();
                     });
