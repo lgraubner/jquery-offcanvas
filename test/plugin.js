@@ -158,7 +158,6 @@ describe("DOM", function() {
 
     it("should add class '" + opclass + "' to container when opened", function(done) {
         $canvas.on("shown.offcanvas", function() {
-            console.log($($.fn.offcanvas.defaults.container));
             expect($($.fn.offcanvas.defaults.container).hasClass(opclass)).to.be.ok;
             done();
         });
