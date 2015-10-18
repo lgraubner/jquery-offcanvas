@@ -1,6 +1,6 @@
 {
   "name": "jquery-offcanvas",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Easy to use jQuery offcanvas plugin.",
   "author": "Lars Graubner <mail@larsgraubner.de>",
   "homepage": "http://lgraubner.github.io/jquery-offcanvas/",
@@ -37,7 +37,8 @@
     "gulp-mocha-phantomjs": "^0.10.1",
     "run-sequence": "^1.1.4",
     "mocha": "^2.3.3",
-    "should": "^7.1.0"
+    "chai": "^3.3.0",
+    "sinon": "^1.17.1"
   },
   "license": "MIT"
 }
