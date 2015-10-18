@@ -40,5 +40,8 @@
     "chai": "^3.3.0",
     "sinon": "^1.17.1"
   },
+  "scripts": {
+      "test": "gulp test"
+  },
   "license": "MIT"
 }
