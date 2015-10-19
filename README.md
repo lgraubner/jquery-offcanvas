@@ -1,6 +1,6 @@
 # jQuery.offcanvas
 
-[![npm](https://img.shields.io/npm/v/jquery-offcanvas.svg)](https://www.npmjs.com/package/jquery-offcanvas)
+[![Travis](https://img.shields.io/travis/lgraubner/jquery-offcanvas.svg)](https://travis-ci.org/lgraubner/jquery-offcanvas)[![npm](https://img.shields.io/npm/v/jquery-offcanvas.svg)](https://www.npmjs.com/package/jquery-offcanvas)
 
 > An easy to use jQuery offcanvas plugin.
 
