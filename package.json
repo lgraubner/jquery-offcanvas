@@ -37,8 +37,8 @@
     "gulp-mocha-phantomjs": "^0.10.1",
     "run-sequence": "^1.1.4",
     "mocha": "^2.3.3",
-    "chai": "^3.3.0",
-    "sinon": "^1.17.1"
+    "chai": "^3.4.0",
+    "sinon": "^1.17.2"
   },
   "scripts": {
       "test": "gulp test"
