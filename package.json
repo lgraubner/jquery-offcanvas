@@ -1,8 +1,12 @@
 {
   "name": "jquery-offcanvas",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "Easy to use jQuery offcanvas plugin.",
-  "author": "Lars Graubner <mail@larsgraubner.de>",
+  "author": {
+      "name": "Lars Graubner",
+      "email": "mail@larsgraubner.de",
+      "url": "http://larsgraubner.de"
+  },
   "homepage": "http://lgraubner.github.io/jquery-offcanvas/",
   "keywords": [
     "jquery-plugin",

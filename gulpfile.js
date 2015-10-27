@@ -12,12 +12,9 @@ var pkg = require("./package.json");
 var pluginName = pkg.name.replace(/-/g, ".");
 
 var banner = ["/**",
-    " * <%= pkg.name %> - v<%= pkg.version %>",
-    " * <%= pkg.description %>",
-    " * <%= pkg.homepage %>",
-    " *",
-    " * Copyright <%= pkg.author %>",
-    " * Under <%= pkg.license %> License",
+    " * jQuery.offcanvas v<%= pkg.version %> - <%= pkg.description %>",
+    " * Copyright " + new Date().getFullYear() + " <%= pkg.author.name %> - <%= pkg.homepage %>",
+    " * License: <%= pkg.license %>",
     " */",
 ""].join("\n");
 
@@ -39,7 +36,7 @@ gulp.task("js", function() {
         .pipe(stripDebug())
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
-        .pipe(rename(pluginName + ".min.js"))
+        .pipe(rename({ suffix: ".min" }))
         .pipe(gulp.dest("dist/"));
 });
 
@@ -47,7 +44,7 @@ gulp.task("css", function() {
     return gulp.src("src/" + pluginName + ".css")
         .pipe(minifyCSS())
         .pipe(header(banner, { pkg: pkg }))
-        .pipe(rename(pluginName + ".min.css"))
+        .pipe(rename({ suffix: ".min" }))
         .pipe(gulp.dest("dist/"));
 });
 
