@@ -84,7 +84,7 @@ describe("Events", function() {
         setTimeout(function() {
             expect(cb.called).to.be.ok;
             done();
-        }, $.fn.offcanvas.defaults.duration);
+        }, $.fn.offcanvas.defaults.duration + 50);
 
     });
 
@@ -108,7 +108,7 @@ describe("Events", function() {
         setTimeout(function() {
             expect(cb.called).to.be.ok;
             done();
-        }, $.fn.offcanvas.defaults.duration);
+        }, $.fn.offcanvas.defaults.duration + 50);
 
     });
 });
