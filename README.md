@@ -30,6 +30,8 @@ Include the CSS file:
 
 If you are not using npm just adjust the paths to match the file locations.
 
+It's not required to have any specific markup. The plugin handles any positioning itself. The only requirement is a wrapping element around the offcanvas contents.
+
 ### Initialization
 
 ```JavaScript
@@ -50,7 +52,7 @@ Options can be set on initialization:
 
 ```JavaScript
 $("#element").offcanvas({
-    direction: "right",
+    origin: "right",
     duration: 400
 });
 ```
@@ -87,7 +89,7 @@ Classes which will be applied to the elements.
 Type: `String`  
 Default: `body`
 
-Page container, which will be animated.
+Page container, which will be animated. Expects a jQuery selector.
 
 ### coverage
 
@@ -98,31 +100,45 @@ Width of the offcanvas element which will be revealed.
 
 **Tip:** For better performance avoid using % values.
 
-### direction
-
-Type: `String`  
-Default: `left`
-
-Direction the offcanvas element is revealed from. Possible values are `left` and `right`.
-
 ### duration
 
 Type: `number`  
-Default: `350`
+Default: `300`
 
 Duration of the animation.
 
 ### easing
 
 Type: `String`  
-Default: "ease-in-out"
+Default: `ease-in-out`
 
 Easing type for show and hide animations. You can use:
 
 - [jQuery UI's easings](http://easings.net/de)
-- CSS3's named easings: "ease", "ease-in", "ease-out", and "ease-in-out"
+- CSS3's named easings: `ease`, `ease-in`, `ease-out`, and `ease-in-out`
 
 For more easing options check the [Velocity.js documentation](http://julian.com/research/velocity/#easing).
+
+### effect
+
+Type: `String`  
+Default: `push`
+
+Effect used to transition the offcanvas element into the viewport. Possible values are `push` and `slide-in-over`. Check the [demos](http://lgraubner.github.io/jquery-offcanvas/demo.html) for an impression of the effects.
+
+### origin
+
+Type: `String`  
+Default: `left`
+
+Direction the offcanvas element is revealed from. Possible values are `left` and `right`.
+
+### overlayColor
+
+Type: `String`  
+Default: `transparent`
+
+Color of the overlay element. By default it's not visible. Best suited are `rgba` values to add a decent looking transparency. You can use `rgba(0, 0, 0, 0.7)` as starting point to play around. The overlay will be smoothly transitioned into the view.
 
 ## API
 
@@ -177,13 +193,3 @@ Fired when the `hide` method is called.
 ### hidden
 
 Fired when the `hide` animation finished.
-
-## Tips
-
-You can grey out your content while the offcanvas element is shown. Simply style the `.offcanvas-overlay` element. The following example overlays the content with a black transparent overlay. It will be display with a smooth animation.
-
-```CSS
-.offcanvas-overlay {
-    background: rgba(0, 0, 0, 0.7);
-}
-```

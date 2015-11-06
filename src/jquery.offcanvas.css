@@ -15,7 +15,7 @@
     overflow: hidden;
     position: absolute;
     top: 0;
-    display: none;
+    z-index: 10010;
 }
 
 .offcanvas-overlay {

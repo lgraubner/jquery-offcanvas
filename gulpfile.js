@@ -7,6 +7,7 @@ var stripDebug = require("gulp-strip-debug");
 var jshint = require("gulp-jshint");
 var mochaPhantomjs = require("gulp-mocha-phantomjs");
 var runSequence = require("run-sequence");
+var babel = require("gulp-babel");
 var pkg = require("./package.json");
 
 var pluginName = pkg.name.replace(/-/g, ".");
@@ -34,6 +35,9 @@ gulp.task("test", function() {
 gulp.task("js", function() {
     return gulp.src("src/" + pluginName + ".js")
         .pipe(stripDebug())
+        .pipe(babel({
+            presets: ["es2015"]
+        }))
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: ".min" }))
