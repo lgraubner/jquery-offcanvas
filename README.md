@@ -6,7 +6,7 @@
 
 This plugin provides an easy way to put content outside of the canvas and reveal it with a click on a button or any desired element. This is a useful pattern for mobile navigations and more.
 
-[Demo](http://lgraubner.github.io/jquery-offcanvas/) | [Download](https://github.com/lgraubner/jquery-offcanvas/releases/latest)
+[Demo](http://lgraubner.github.io/jquery-offcanvas/demo/) | [Download](https://github.com/lgraubner/jquery-offcanvas/releases/latest)
 
 ## Dependencies
 
@@ -124,7 +124,7 @@ For more easing options check the [Velocity.js documentation](http://julian.com/
 Type: `String`  
 Default: `push`
 
-Effect used to transition the offcanvas element into the viewport. Possible values are `push` and `slide-in-over`. Check the [demos](http://lgraubner.github.io/jquery-offcanvas/demo.html) for an impression of the effects.
+Effect used to transition the offcanvas element into the viewport. Possible values are `push` and `slide-in-over`. Check the [demos](http://lgraubner.github.io/jquery-offcanvas/demo/) for an impression of the effects.
 
 ### origin
 
