@@ -130,11 +130,7 @@
          * Shorthand function to toggle container.
          */
         toggle: function() {
-            if (this._open) {
-                this.hide();
-            } else {
-                this.show();
-            }
+            return (this._open ? this.hide : this.show)();
         },
 
         /**
