@@ -83,7 +83,7 @@
 
             this.effects[this.settings.effect].$el.velocity("stop")
                 .velocity({
-                    [this.settings.origin]: this.effects[this.settings.effect].to
+                    [this.settings.origin]: [this.effects[this.settings.effect].from, this.effects[this.settings.effect].to]
                 }, $.extend({
                     complete: () => {
                         this.$el.trigger(`shown.${this._name}`);
@@ -94,7 +94,7 @@
                 }, this.animationOptions));
 
             this.$overlay.velocity({
-                opacity: 1
+                opacity: [0, 1]
             }, $.extend({
                 display: "block"
             }, this.animationOptions));
@@ -112,7 +112,7 @@
 
             this.effects[this.settings.effect].$el.velocity("stop")
                 .velocity({
-                    [this.settings.origin]: this.effects[this.settings.effect].from
+                    [this.settings.origin]: [this.effects[this.settings.effect].to, this.effects[this.settings.effect].from]
                 }, $.extend({
                     complete: () => {
                         this.$el.trigger(`hidden.${this._name}`);
@@ -120,7 +120,7 @@
                 }, this.animationOptions));
 
             this.$overlay.velocity({
-                opacity: 0
+                opacity: [1, 0]
             }, $.extend({
                 display: "none"
             }, this.animationOptions));
@@ -167,6 +167,8 @@
             this.$doc = $(document);
             this._open = false;
 
+            this.$overlay = $(`.${this.settings.classes.overlay}`);
+
             this.$cont = $(this.settings.container);
             this.$cont.addClass(this.settings.classes.container)
                 .children(":not(script)")
@@ -183,7 +185,6 @@
                     .addClass(this.settings.classes.overlay)
                     .css("background-color", this.settings.overlayColor)
             );
-            this.$overlay = $(`.${this.settings.classes.overlay}`);
 
             this.$el.wrap($("<div/>")
                 .addClass(this.settings.classes.element));
