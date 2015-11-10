@@ -15,7 +15,8 @@
     "canvas",
     "animation",
     "mobile",
-    "velocity"
+    "velocity",
+    "browser"
   ],
   "main": "dist/jquery.offcanvas.min.js",
   "repository": {
