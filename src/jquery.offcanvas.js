@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.0.0
+ * @version 3.1.0
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -75,7 +75,9 @@
          * Function to show container.
          */
         show: function() {
-            if (this._visible) return; // already shown
+            if (this._visible) {
+                return; // already shown
+            }
 
             console.log("[%s] --show--", this._name);
             this.$el.trigger(`show.${this._name}`);
@@ -112,7 +114,9 @@
          * Function to hide container.
          */
         hide: function() {
-            if (!this._visible) return; // already hidden
+            if (!this._visible) {
+                return; // already hidden
+            }
 
             console.log("[%s] --hide--", this._name);
             this.$el.trigger(`hide.${this._name}`);
@@ -142,7 +146,7 @@
          * Shorthand function to toggle container.
          */
         toggle: function() {
-            return (this._visible ? this.hide : this.show)();
+            return (this._visible ? this.hide : this.show).call(this);
         },
 
         /**
