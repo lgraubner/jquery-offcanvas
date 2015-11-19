@@ -66,18 +66,22 @@
 
             var height = this.$doc.height();
             this.$element.css("height", height);
-            this.$overlay.css("height", height);
+            if (this.settings.overlay) {
+                this.$overlay.css("height", height);
+            }
         },
 
         /**
          * Function to show container.
          */
         show: function() {
+            if (this._visible) return; // already shown
+
             console.log("[%s] --show--", this._name);
             this.$el.trigger(`show.${this._name}`);
 
             this.$cont.addClass(this.settings.classes.open);
-            this._open = true;
+            this._visible = true;
 
             this._setHeights();
 
@@ -87,28 +91,34 @@
                 }, $.extend({
                     complete: () => {
                         this.$el.trigger(`shown.${this._name}`);
-                        this.$overlay.one(`click.${this._name}`, (e) => {
-                            this.hide();
-                        });
+                        if (this.settings.overlay) {
+                            this.$overlay.one(`click.${this._name}`, (e) => {
+                                this.hide();
+                            });
+                        }
                     }
                 }, this.animationOptions));
 
-            this.$overlay.velocity({
-                opacity: [1, 0]
-            }, $.extend({
-                display: "block"
-            }, this.animationOptions));
+            if (this.settings.overlay) {
+                this.$overlay.velocity({
+                    opacity: [1, 0]
+                }, $.extend({
+                    display: "block"
+                }, this.animationOptions));
+            }
         },
 
         /**
          * Function to hide container.
          */
         hide: function() {
+            if (!this._visible) return; // already hidden
+
             console.log("[%s] --hide--", this._name);
             this.$el.trigger(`hide.${this._name}`);
 
             this.$cont.removeClass(this.settings.classes.open);
-            this._open = false;
+            this._visible = false;
 
             this.effects[this.settings.effect].$el.velocity("stop")
                 .velocity({
@@ -119,18 +129,20 @@
                     }
                 }, this.animationOptions));
 
-            this.$overlay.velocity({
-                opacity: [0, 1]
-            }, $.extend({
-                display: "none"
-            }, this.animationOptions));
+            if (this.settings.overlay) {
+                this.$overlay.velocity({
+                    opacity: [0, 1]
+                }, $.extend({
+                    display: "none"
+                }, this.animationOptions));
+            }
         },
 
         /**
          * Shorthand function to toggle container.
          */
         toggle: function() {
-            return (this._open ? this.hide : this.show)();
+            return (this._visible ? this.hide : this.show)();
         },
 
         /**
@@ -147,7 +159,9 @@
             this.$cont.removeClass(this.settings.classes.container)
                 .removeClass(this.settings.classes.open);
 
-            this.$overlay.off(`click.${this._name}`).remove();
+            if (this.settings.overlay) {
+                this.$overlay.off(`click.${this._name}`).remove();
+            }
 
             this.$el.unwrap()
                 .removeData(`${this._name}.opts`)
@@ -161,7 +175,7 @@
 
             this.$win = $(window);
             this.$doc = $(document);
-            this._open = false;
+            this._visible = false;
 
             this.$cont = $(this.settings.container);
             this.$cont.addClass(this.settings.classes.container)
@@ -174,12 +188,14 @@
                 .addClass(this.settings.classes.inner));
             this.$innerWrapper = $(`.${this.settings.classes.inner}`);
 
-            this.$innerWrapper.append(
-                $("<div/>")
-                    .addClass(this.settings.classes.overlay)
-                    .css("background-color", this.settings.overlayColor)
-            );
-            this.$overlay = $(`.${this.settings.classes.overlay}`);
+            if (this.settings.overlay) {
+                this.$innerWrapper.append(
+                    $("<div/>")
+                        .addClass(this.settings.classes.overlay)
+                        .css("background-color", this.settings.overlayColor)
+                );
+                this.$overlay = $(`.${this.settings.classes.overlay}`);
+            }
 
             this.$el.wrap($("<div/>")
                 .addClass(this.settings.classes.element));
@@ -268,6 +284,7 @@
         duration: 300,
         easing: "ease-in-out",
         effect: "push",
-        overlayColor: "transparent"
+        overlay: false,
+        overlayColor: "rgba(0, 0, 0, 0.7)"
     };
 })(window, document, jQuery);

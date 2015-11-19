@@ -119,7 +119,9 @@ describe("DOM", function() {
 
     before(function() {
         $canvas = $(document.createElement("div"));
-        $canvas.offcanvas();
+        $canvas.offcanvas({
+            overlay: true
+        });
     });
 
     after(function() {
@@ -135,17 +137,17 @@ describe("DOM", function() {
     var oclass = $.fn.offcanvas.defaults.classes.outer;
 
     it("should wrap everyting in a div with class '" + oclass + "'", function() {
-        expect($("." + oclass)).to.exist;
+        expect($("." + oclass).length).to.equal(1);
     });
 
     var iclass = $.fn.offcanvas.defaults.classes.inner;
 
     it("should wrap everyting in a div with class '" + iclass + "'", function() {
-        expect($("." + iclass)).to.exist;
+        expect($("." + iclass).length).to.equal(1);
     });
 
     it("should add an overlay element", function() {
-        expect($("." + $.fn.offcanvas.defaults.classes.overlay)).to.exist;
+        expect($("." + $.fn.offcanvas.defaults.classes.overlay).length).to.equal(1);
     });
 
     var cclass = $.fn.offcanvas.defaults.classes.container;

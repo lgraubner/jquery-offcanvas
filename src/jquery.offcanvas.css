@@ -1,3 +1,7 @@
+.offcanvas {
+    position: relative;
+}
+
 .offcanvas-outer {
     left: 0;
     overflow-x: hidden;

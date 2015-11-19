@@ -133,12 +133,19 @@ Default: `left`
 
 Direction the offcanvas element is revealed from. Possible values are `left` and `right`.
 
+### overlay
+
+Type: `boolean`  
+Default: `false`
+
+Adds an overlay to cover the content of the page. A click anywhere on the overlay will hide the offcanvas.
+
 ### overlayColor
 
 Type: `String`  
-Default: `transparent`
+Default: `rgba(0, 0, 0, 0.7)`
 
-Color of the overlay element. By default it's not visible. Best suited are `rgba` values to add a decent looking transparency. You can use `rgba(0, 0, 0, 0.7)` as starting point to play around. The overlay will be smoothly transitioned into the view.
+Color of the overlay element. Best suited are `rgba` values to add a decent looking transparency. You can use `rgba(0, 0, 0, 0.7)` as starting point to play around. The overlay will be smoothly transitioned into the view.
 
 ## API
 
