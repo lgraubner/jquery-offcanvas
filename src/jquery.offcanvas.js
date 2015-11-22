@@ -102,7 +102,7 @@
                 }, this.animationOptions));
 
             if (this.settings.overlay) {
-                this.$overlay.velocity({
+                this.$overlay.velocity("stop").velocity({
                     opacity: [1, 0]
                 }, $.extend({
                     display: "block"
@@ -134,7 +134,7 @@
                 }, this.animationOptions));
 
             if (this.settings.overlay) {
-                this.$overlay.velocity({
+                this.$overlay.velocity("stop").velocity({
                     opacity: [0, 1]
                 }, $.extend({
                     display: "none"
