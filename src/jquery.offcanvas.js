@@ -87,9 +87,8 @@
 
             this._setHeights();
 
-            this.effects[this.settings.effect].$el.velocity("stop")
-                .velocity({
-                    [this.settings.origin]: [this.effects[this.settings.effect].to, this.effects[this.settings.effect].from]
+            this.effects[this.settings.effect].$el.velocity({
+                    [this.settings.origin]: this.effects[this.settings.effect].to
                 }, $.extend({
                     complete: () => {
                         this.$el.trigger(`shown.${this._name}`);
@@ -102,8 +101,8 @@
                 }, this.animationOptions));
 
             if (this.settings.overlay) {
-                this.$overlay.velocity("stop").velocity({
-                    opacity: [1, 0]
+                this.$overlay.velocity({
+                    opacity: 1
                 }, $.extend({
                     display: "block"
                 }, this.animationOptions));
@@ -125,18 +124,14 @@
             this._visible = false;
 
             this.effects[this.settings.effect].$el.velocity("stop")
-                .velocity({
-                    [this.settings.origin]: [this.effects[this.settings.effect].from, this.effects[this.settings.effect].to]
-                }, $.extend({
+                .velocity("reverse", $.extend({
                     complete: () => {
                         this.$el.trigger(`hidden.${this._name}`);
                     }
                 }, this.animationOptions));
 
             if (this.settings.overlay) {
-                this.$overlay.velocity("stop").velocity({
-                    opacity: [0, 1]
-                }, $.extend({
+                this.$overlay.velocity("stop").velocity("reverse", $.extend({
                     display: "none"
                 }, this.animationOptions));
             }
