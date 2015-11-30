@@ -199,7 +199,7 @@ Fired when the `hide` method is called.
 
 ### toggle
 
-Fired when the `toggle` method is called.
+Fired when the offcanvas gets toggled. Gets fired on both, `show` and `hide` methods.
 
 ### hidden
 
