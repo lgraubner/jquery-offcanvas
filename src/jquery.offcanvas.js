@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.2.1
+ * @version 3.2.2
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -79,12 +79,12 @@
                 return; // already shown
             }
 
-            console.log("[%s] --show--", this._name);
-            this.$el.trigger(`show.${this._name}`);
-            this.$el.trigger(`toggle.${this._name}`);
-
             this.$cont.addClass(this.settings.classes.open);
             this._visible = true;
+
+            console.log("[%s] --show--", this._name);
+            this.$el.trigger(`show.${this._name}`);
+            this.$el.trigger(`toggle.${this._name}`, this._visible);
 
             this._setHeights();
 
@@ -118,12 +118,12 @@
                 return; // already hidden
             }
 
-            console.log("[%s] --hide--", this._name);
-            this.$el.trigger(`hide.${this._name}`);
-            this.$el.trigger(`toggle.${this._name}`);
-
             this.$cont.removeClass(this.settings.classes.open);
             this._visible = false;
+
+            console.log("[%s] --hide--", this._name);
+            this.$el.trigger(`hide.${this._name}`);
+            this.$el.trigger(`toggle.${this._name}`, this._visible);
 
             this.effects[this.settings.effect].$el.velocity("stop")
                 .velocity("reverse", $.extend({

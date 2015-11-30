@@ -199,7 +199,13 @@ Fired when the `hide` method is called.
 
 ### toggle
 
-Fired when the offcanvas gets toggled. Gets fired on both, `show` and `hide` methods.
+Fired when the offcanvas gets toggled. Gets fired on both, `show` and `hide` methods. The second function argument contains the offcanvas state as `boolean`.
+
+```JavaScript
+$("#element").on("toggle.offcanvas", function(event, visible) {
+    console.log(visible) // outputs offcanvas state (true or false)
+});
+```
 
 ### hidden
 
