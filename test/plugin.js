@@ -111,6 +111,16 @@ describe("Events", function() {
         }, $.fn.offcanvas.defaults.duration + 50);
 
     });
+
+    it("should trigger 'toggle' event", function() {
+
+        var cb = sinon.spy();
+
+        $canvas.on("toggle.offcanvas", cb);
+        $canvas.offcanvas("toggle");
+
+        expect(cb.called).to.be.ok;
+    });
 });
 
 describe("DOM", function() {

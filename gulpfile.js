@@ -52,8 +52,8 @@ gulp.task("css", function() {
         .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build", function(callback) {
-    runSequence(["lint", "test"], ["js", "css"], callback);
-});
+gulp.task("build", ["js", "css"]);
 
-gulp.task("default", ["build"]);
+gulp.task("default", function(callback) {
+    runSequence(["lint"], ["build"], ["test"], callback)
+});

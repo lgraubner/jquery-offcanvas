@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.1.2
+ * @version 3.2.0
  * @license MIT
  */
 ;(function(window, document, $, undefined) {
@@ -141,6 +141,7 @@
          * Shorthand function to toggle container.
          */
         toggle: function() {
+            this.$el.trigger(`toggle.${this._name}`);
             return (this._visible ? this.hide : this.show).call(this);
         },
 

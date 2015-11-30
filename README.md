@@ -197,6 +197,10 @@ Fired when the `show` animation finished.
 
 Fired when the `hide` method is called.
 
+### toggle
+
+Fired when the `toggle` method is called.
+
 ### hidden
 
 Fired when the `hide` animation finished.
