@@ -24,7 +24,7 @@ gulp.task("lint", function() {
         .pipe(jshint.reporter("jshint-stylish"));
 });
 
-gulp.task("test", function() {
+gulp.task("test", ["build"], function() {
     return gulp.src("test/runner.html")
         .pipe(mochaPhantomjs({
             reporter: "spec"
@@ -53,4 +53,4 @@ gulp.task("styles", function() {
 
 gulp.task("build", ["scripts", "styles"]);
 
-gulp.task("default", ["build", "test"]);
+gulp.task("default", ["test"]);
