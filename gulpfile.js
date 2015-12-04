@@ -6,7 +6,6 @@ var minifyCSS = require("gulp-minify-css");
 var stripDebug = require("gulp-strip-debug");
 var jshint = require("gulp-jshint");
 var mochaPhantomjs = require("gulp-mocha-phantomjs");
-var runSequence = require("run-sequence");
 var babel = require("gulp-babel");
 var pkg = require("./package.json");
 
@@ -32,7 +31,7 @@ gulp.task("test", function() {
         }));
 });
 
-gulp.task("js", function() {
+gulp.task("scripts", ["lint"], function() {
     return gulp.src("src/" + pluginName + ".js")
         .pipe(stripDebug())
         .pipe(babel({
@@ -44,7 +43,7 @@ gulp.task("js", function() {
         .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("css", function() {
+gulp.task("styles", function() {
     return gulp.src("src/" + pluginName + ".css")
         .pipe(minifyCSS())
         .pipe(header(banner, { pkg: pkg }))
@@ -52,8 +51,6 @@ gulp.task("css", function() {
         .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("build", ["js", "css"]);
+gulp.task("build", ["scripts", "styles"]);
 
-gulp.task("default", function(callback) {
-    runSequence(["lint"], ["build"], ["test"], callback)
-});
+gulp.task("default", ["build", "test"]);
