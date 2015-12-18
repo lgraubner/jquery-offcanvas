@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/lgraubner/jquery-offcanvas/issues"
   },
-  "dependencies": {
+  "peerDependencies": {
     "jquery": ">=1.7.0",
     "velocity-animate": "^1.2.3"
   },

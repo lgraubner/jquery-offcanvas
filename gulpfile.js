@@ -1,13 +1,13 @@
-var gulp = require("gulp");
-var uglify = require("gulp-uglify");
-var header = require("gulp-header");
-var rename = require("gulp-rename");
-var minifyCSS = require("gulp-minify-css");
-var stripDebug = require("gulp-strip-debug");
-var jshint = require("gulp-jshint");
-var mochaPhantomjs = require("gulp-mocha-phantomjs");
-var babel = require("gulp-babel");
-var pkg = require("./package.json");
+const gulp = require("gulp");
+const uglify = require("gulp-uglify");
+const header = require("gulp-header");
+const rename = require("gulp-rename");
+const minifyCSS = require("gulp-minify-css");
+const stripDebug = require("gulp-strip-debug");
+const jshint = require("gulp-jshint");
+const mochaPhantomjs = require("gulp-mocha-phantomjs");
+const babel = require("gulp-babel");
+const pkg = require("./package.json");
 
 var pluginName = pkg.name.replace(/-/g, ".");
 
@@ -18,21 +18,21 @@ var banner = ["/**",
     " */",
 ""].join("\n");
 
-gulp.task("lint", function() {
+gulp.task("lint", () => {
     return gulp.src("src/*.js")
         .pipe(jshint())
         .pipe(jshint.reporter("jshint-stylish"));
 });
 
-gulp.task("test", ["build"], function() {
+gulp.task("test", ["build"], () => {
     return gulp.src("test/runner.html")
         .pipe(mochaPhantomjs({
             reporter: "spec"
         }));
 });
 
-gulp.task("scripts", ["lint"], function() {
-    return gulp.src("src/" + pluginName + ".js")
+gulp.task("scripts", ["lint"], () => {
+    return gulp.src(`src/${pluginName}.js`)
         .pipe(stripDebug())
         .pipe(babel({
             presets: ["es2015"]
@@ -43,8 +43,8 @@ gulp.task("scripts", ["lint"], function() {
         .pipe(gulp.dest("dist/"));
 });
 
-gulp.task("styles", function() {
-    return gulp.src("src/" + pluginName + ".css")
+gulp.task("styles", () => {
+    return gulp.src(`src/${pluginName}.css`)
         .pipe(minifyCSS())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: ".min" }))
