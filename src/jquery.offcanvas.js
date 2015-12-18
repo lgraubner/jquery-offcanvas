@@ -2,10 +2,30 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.2.2
+ * @version 3.3.0
  * @license MIT
  */
-;(function(window, document, $, undefined) {
+
+
+;(function(root, factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        module.exports = function(root, jQuery) {
+            if (jQuery === undefined) {
+                if (typeof window !== "undefined") {
+                    jQuery = require("jquery");
+                } else {
+                    jQuery = require("jquery")(root);
+                }
+            }
+            factory(jQuery);
+            return jQuery;
+        };
+    } else if (typeof define === "function" && define.amd) {
+        define(["jquery "], factory);
+    } else {
+        factory(jQuery);
+    }
+}(this, function($) {
     "use strict";
 
     var pluginName = "offcanvas";
@@ -288,4 +308,4 @@
         overlay: false,
         overlayColor: "rgba(0, 0, 0, 0.7)"
     };
-})(window, document, jQuery);
+}));
