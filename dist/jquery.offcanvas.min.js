@@ -1,5 +1,5 @@
 /**
- * jQuery.offcanvas v3.4.0 - Easy to use jQuery offcanvas plugin.
+ * jQuery.offcanvas v3.4.1 - Easy to use jQuery offcanvas plugin.
  * Copyright 2016 Lars Graubner - http://lgraubner.github.io/jquery-offcanvas/
  * License: MIT
  */
