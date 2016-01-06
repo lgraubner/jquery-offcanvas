@@ -121,7 +121,7 @@
           if (this.settings.overlay) {
             this.$overlay.one('click.' + this._name, function () {
               this.hide();
-            });
+            }.bind(this));
           }
         }.bind(this),
       }, this.animationOptions));
