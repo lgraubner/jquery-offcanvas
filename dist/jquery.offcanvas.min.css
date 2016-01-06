@@ -1,6 +1,6 @@
 /**
- * jQuery.offcanvas v3.3.0 - Easy to use jQuery offcanvas plugin.
- * Copyright 2015 Lars Graubner - http://lgraubner.github.io/jquery-offcanvas/
+ * jQuery.offcanvas v3.4.0 - Easy to use jQuery offcanvas plugin.
+ * Copyright 2016 Lars Graubner - http://lgraubner.github.io/jquery-offcanvas/
  * License: MIT
  */
-.offcanvas{position:relative}.offcanvas-outer{left:0;overflow-x:hidden;position:absolute;top:0;width:100%}.offcanvas-inner{position:relative}.offcanvas-element{margin:0;overflow:hidden;position:absolute;top:0;z-index:10010}.offcanvas-overlay{display:none;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:10001}
+.offcanvas{position:relative}.offcanvas-outer{left:0;overflow-x:hidden;position:absolute;top:0;width:100%}.offcanvas-inner{position:relative}.offcanvas-element{margin:0;overflow:hidden;position:absolute;top:0;z-index:2}.offcanvas-overlay{display:none;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:1}
