@@ -141,11 +141,11 @@ describe('DOM', function () {
     expect($canvas.parent().hasClass(pclass)).to.be.ok;
   });
 
-  it('should wrap everyting in a div with class "' + oclass + '"', function () {
+  it('should wrap everything in a div with class "' + oclass + '"', function () {
     expect($('.' + oclass).length).to.equal(1);
   });
 
-  it('should wrap everyting in a div with class "' + iclass + '"', function () {
+  it('should wrap everything in a div with class "' + iclass + '"', function () {
     expect($('.' + iclass).length).to.equal(1);
   });
 
