@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.4.5
+ * @version 3.4.6
  * @license MIT
  */
 
@@ -84,7 +84,7 @@
      * Set height of the container.
      */
     _setHeights: function () {
-      var height = $('.' + this.$outerWrapper).height();
+      var height = this.$outerWrapper.height();
 
       if (!this.$el.data(this._name + '.opts')) {
         return; // already initialized
