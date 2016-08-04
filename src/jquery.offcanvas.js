@@ -2,7 +2,7 @@
  * An easy to use plugin for an offcanvas container.
  *
  * @author Lars Graubner <mail@larsgraubner.de>
- * @version 3.4.1
+ * @version 3.4.2
  * @license MIT
  */
 
@@ -84,7 +84,7 @@
      * Set height of the container.
      */
     _setHeights: function () {
-      var height = this.$doc.height();
+      var height = this.$body.height();
 
       if (!this.$el.data(this._name + '.opts')) {
         return; // already initialized
@@ -202,7 +202,7 @@
       console.log('[%s] --init--', this._name);
 
       this.$win = $(window);
-      this.$doc = $(document);
+      this.$body = $('body');
       this._visible = false;
 
       this.$cont = $(this.settings.container);
