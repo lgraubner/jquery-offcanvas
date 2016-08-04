@@ -84,7 +84,7 @@
      * Set height of the container.
      */
     _setHeights: function () {
-      var height = this.$outerWrapper;
+      var height = $('.' + this.$outerWrapper).height();
 
       if (!this.$el.data(this._name + '.opts')) {
         return; // already initialized
