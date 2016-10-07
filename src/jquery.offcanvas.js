@@ -11,8 +11,10 @@
     module.exports = function (root, jQuery) {
       if (jQuery === undefined) {
         if (typeof window !== 'undefined') {
+          // eslint-disable-next-line
           jQuery = require('jquery');
         } else {
+          // eslint-disable-next-line
           jQuery = require('jquery')(root);
         }
       }
@@ -62,16 +64,18 @@
 
     this.$el = $(element);
 
+    /* eslint-disable */
     for (p in data) {
       if (data.hasOwnProperty(p) && /^offcanvas[A-Z]+/.test(p)) {
         shortName = p[pluginName.length].toLowerCase() + p.substr(pluginName.length + 1);
         data[shortName] = data[p];
       }
     }
+    /* eslint-enable */
 
     this.settings = $.extend(true, {}, $.fn[pluginName].defaults, options, data);
-    this._name = pluginName;
-    this.$el.data(this._name + '.opts', this.settings);
+    this.name = pluginName;
+    this.$el.data(this.name + '.opts', this.settings);
 
     this.init();
   }
@@ -83,10 +87,10 @@
     /**
      * Set height of the container.
      */
-    _setHeights: function () {
+    setHeights: function () {
       var height = this.$outerWrapper.height();
 
-      if (!this.$el.data(this._name + '.opts')) {
+      if (!this.$el.data(this.name + '.opts')) {
         return; // already initialized
       }
 
@@ -101,36 +105,36 @@
      */
     show: function () {
       var anim = {};
-      if (this._visible) {
+      if (this.visible) {
         return; // already shown
       }
 
       this.$cont.addClass(this.settings.classes.open);
-      this._visible = true;
+      this.visible = true;
 
-      console.log('[%s] --show--', this._name);
-      this.$el.trigger('show.' + this._name);
-      this.$el.trigger('toggle.' + this._name, this._visible);
+      console.log('[%s] --show--', this.name);
+      this.$el.trigger('show.' + this.name);
+      this.$el.trigger('toggle.' + this.name, this.visible);
 
-      this._setHeights();
+      this.setHeights();
 
       anim[this.settings.origin] = this.effects[this.settings.effect].to;
       this.effects[this.settings.effect].$el.velocity(anim, $.extend({
         complete: function () {
-          this.$el.trigger('shown.' + this._name);
+          this.$el.trigger('shown.' + this.name);
           if (this.settings.overlay) {
-            this.$overlay.one('click.' + this._name, function () {
+            this.$overlay.one('click.' + this.name, function () {
               this.hide();
             }.bind(this));
           }
-        }.bind(this),
+        }.bind(this)
       }, this.animationOptions));
 
       if (this.settings.overlay) {
         this.$overlay.velocity({
-          opacity: 1,
+          opacity: 1
         }, $.extend({
-          display: 'block',
+          display: 'block'
         }, this.animationOptions));
       }
     },
@@ -139,27 +143,27 @@
      * Function to hide container.
      */
     hide: function () {
-      if (!this._visible) {
+      if (!this.visible) {
         return; // already hidden
       }
 
       this.$cont.removeClass(this.settings.classes.open);
-      this._visible = false;
+      this.visible = false;
 
-      console.log('[%s] --hide--', this._name);
-      this.$el.trigger('hide.' + this._name);
-      this.$el.trigger('toggle.' + this._name, this._visible);
+      console.log('[%s] --hide--', this.name);
+      this.$el.trigger('hide.' + this.name);
+      this.$el.trigger('toggle.' + this.name, this.visible);
 
       this.effects[this.settings.effect].$el.velocity('stop')
         .velocity('reverse', $.extend({
           complete: function () {
-            this.$el.trigger('hidden.' + this._name);
-          }.bind(this),
+            this.$el.trigger('hidden.' + this.name);
+          }.bind(this)
         }, this.animationOptions));
 
       if (this.settings.overlay) {
         this.$overlay.velocity('stop').velocity('reverse', $.extend({
-          display: 'none',
+          display: 'none'
         }, this.animationOptions));
       }
     },
@@ -168,18 +172,18 @@
      * Shorthand function to toggle container.
      */
     toggle: function () {
-      return (this._visible ? this.hide : this.show).call(this);
+      return (this.visible ? this.hide : this.show).call(this);
     },
 
     /**
      * Destroy function to remove all changes and data.
      */
     destroy: function () {
-      if (!this.$el.data(this._name + '.opts')) {
+      if (!this.$el.data(this.name + '.opts')) {
         return; // no instance found
       }
 
-      console.log('[%s] --destroy--', this._name);
+      console.log('[%s] --destroy--', this.name);
       this.$innerWrapper.unwrap();
       this.$innerWrapper.children().unwrap();
 
@@ -187,23 +191,23 @@
         .removeClass(this.settings.classes.open);
 
       if (this.settings.overlay) {
-        this.$overlay.off('click.' + this._name).remove();
+        this.$overlay.off('click.' + this.name).remove();
       }
 
       this.$el.unwrap()
-        .removeData(this._name + '.opts')
+        .removeData(this.name + '.opts')
         .removeAttr('style');
 
-      this.$win.off('resize.' + this._name);
+      this.$win.off('resize.' + this.name);
     },
 
     init: function () {
       var styles = {};
-      console.log('[%s] --init--', this._name);
+      console.log('[%s] --init--', this.name);
 
       this.$win = $(window);
       this.$body = $('body');
-      this._visible = false;
+      this.visible = false;
 
       this.$cont = $(this.settings.container);
       this.$cont.addClass(this.settings.classes.container)
@@ -238,25 +242,25 @@
         push: {
           $el: this.$innerWrapper,
           from: 0,
-          to: this.settings.coverage,
+          to: this.settings.coverage
         },
         'slide-in-over': {
           $el: this.$element,
           from: '-' + this.settings.coverage,
-          to: 0,
-        },
+          to: 0
+        }
       };
 
       this.animationOptions = {
         easing: this.settings.easing,
-        duration: this.settings.duration,
+        duration: this.settings.duration
       };
 
-      this.$win.on('resize.' + this._name, debounce(this._setHeights, 300).bind(this));
-      this._setHeights();
+      this.$win.on('resize.' + this.name, debounce(this.setHeights, 300).bind(this));
+      this.setHeights();
 
-      this.$el.trigger('init.' + this._name);
-    },
+      this.$el.trigger('init.' + this.name);
+    }
   });
 
   /**
@@ -287,6 +291,8 @@
 
       return returns !== undefined ? returns : this;
     }
+
+    return false;
   };
 
   /**
@@ -301,7 +307,7 @@
       inner: pluginName + '-inner',
       open: pluginName + '-open',
       outer: pluginName + '-outer',
-      overlay: pluginName + '-overlay',
+      overlay: pluginName + '-overlay'
     },
     container: 'body',
     coverage: '220px',
@@ -310,6 +316,6 @@
     easing: 'ease-in-out',
     effect: 'push',
     overlay: false,
-    overlayColor: 'rgba(0, 0, 0, 0.7)',
+    overlayColor: 'rgba(0, 0, 0, 0.7)'
   };
 }));
